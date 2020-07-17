@@ -1,7 +1,6 @@
 const fs = require('fs')
 const { read, intToRGBA } = require('jimp')
 const { createCanvas } = require('canvas')
-const { isContext } = require('vm')
 const symbols = ['@', '#', '$', '%', ';', ':', '^', '*', ',', '.', '\'', ' ']
 
 /**
