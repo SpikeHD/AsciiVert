@@ -36,8 +36,8 @@ exports.imageToText = (infile, resolution) => {
           if(x == resolution.width) str += row + '\n'
         }
 
-        // When we finish, we can return some usefull data
-        // as well as the raw string
+        // When we finish, we can return some useful data
+        // that also includes the raw string
         if(y == resolution.height) {
           resolve({
             width: resolution.width,
@@ -60,6 +60,8 @@ exports.imageToText = (infile, resolution) => {
  */
 exports.textToImage = (outfile, textObj) => {
   return new Promise(async (resolve, reject) => {
+    if(typeof(textObj) !== 'object') reject('Invalid text object')
+
     // Create canvas assuming we are supplied with an
     // object that contains the width, height, and text
     let canvas = createCanvas(textObj.width * 14, textObj.height * 14)
