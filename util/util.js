@@ -13,6 +13,6 @@ exports.updateProgress = (percentage, info) => {
 
   if(percentage == 100) {
     process.stdout.clearLine()
-    process.stdout.write('\n')
+    process.stdout.cursorTo(0)
   }
 }

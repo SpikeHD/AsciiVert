@@ -115,10 +115,6 @@ exports.convertFrames = async (framesPath, outdir, resolution) => {
  *  Path to original file (for audio extraction).
  */
 exports.framesToVideo = async (framesPath, outfile, original, framerate) => {
-  // Progress bar values
-  let cur = 0
-  let percent = 0
-
   let frames = fs.readdirSync(framesPath)
   frames.sort((a, b) => {
     let aNum = Number(a.replace(/[^0-9]/g, ''))
