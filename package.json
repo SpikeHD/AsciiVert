@@ -1,0 +1,25 @@
+{
+  "name": "asciisite",
+  "version": "1.0.0",
+  "description": "Convert images and videos to ascii art!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spikegd/asciisite.git"
+  },
+  "author": "SpikeGD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spikegd/asciisite/issues"
+  },
+  "homepage": "https://github.com/spikegd/asciisite#readme",
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "ffmpeg-stream": "^0.6.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "jimp": "^0.14.0"
+  }
+}
