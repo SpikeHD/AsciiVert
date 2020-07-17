@@ -1,5 +1,7 @@
 const fs = require('fs')
-const jimp = require('jimp')
+const { read, intToRGBA } = require('jimp')
+const { createCanvas } = require('canvas')
+const { isContext } = require('vm')
 const symbols = ['@', '#', '$', '%', ';', ':', '^', '*', ',', '.', '\'', ' ']
 
 /**
@@ -12,7 +14,7 @@ const symbols = ['@', '#', '$', '%', ';', ':', '^', '*', ',', '.', '\'', ' ']
  */
 exports.imageToText = (infile, resolution) => {
   return new Promise(async (resolve, reject) => {
-    jimp.read(infile, (err, img) => {
+    read(infile, (err, img) => {
       if(err) reject(err)
       
       let str = ''
@@ -27,7 +29,7 @@ exports.imageToText = (infile, resolution) => {
 
         for (let x = 0; x <= resolution.width; x++) {
           // Since we downscale we only get the relevant pixels, evenly calculated/distributed
-          let rgba = jimp.intToRGBA(img.getPixelColor(x * downscale.x, y * downscale.y))
+          let rgba = intToRGBA(img.getPixelColor(x * downscale.x, y * downscale.y))
           row += calculateSymbol(rgba, symbols)
 
           // If we're done, start the next row
@@ -51,13 +53,29 @@ exports.imageToText = (infile, resolution) => {
 /**
  * Convert a string of text to an image file.
  * 
- * @param {String} text 
+ * @param {Object} textObj 
  *  Text to be made into image.
  * @param {String} outfile 
  *  Path to the finished file.
  */
-exports.textToImage = async (text, outfile) => {
+exports.textToImage = (outfile, textObj) => {
+  return new Promise(async (resolve, reject) => {
+    // Create canvas assuming we are supplied with an
+    // object that contains the width, height, and text
+    let canvas = createCanvas(textObj.width * 14, textObj.height * 14)
+    let ctx = canvas.getContext('2d')
 
+    // Fill with white
+    ctx.fillStyle = 'white'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    // Write text to image using monospaced font for equal spacing
+    ctx.fillStyle = 'black'
+    ctx.font = '10pt Consolas'
+    ctx.fillText(textObj.content, 0, 0)
+
+    resolve(await writebuf(outfile, canvas.toDataURL('image/png')))
+  })
 }
 
 /**
@@ -68,7 +86,11 @@ exports.textToImage = async (text, outfile) => {
  *  Image to write.
  */
 function writebuf(filename, img) {
-
+  return new Promise(async (resolve, reject) => {
+    let data = img.replace(/^data:image\/\w+;base64,/, '')
+    let buf = new Buffer(data, 'base64')
+    resolve(await fs.writeFileSync(filename, buf))
+  })
 }
 
 /**
