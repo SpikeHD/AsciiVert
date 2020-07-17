@@ -114,6 +114,46 @@ exports.convertFrames = async (framesPath, outdir, resolution) => {
  * @param {String} original 
  *  Path to original file (for audio extraction).
  */
-exports.framesToVideo = async (framesPath, outfile, original) => {
-  
+exports.framesToVideo = async (framesPath, outfile, original, framerate) => {
+  // Progress bar values
+  let cur = 0
+  let percent = 0
+
+  let frames = fs.readdirSync(framesPath)
+  frames.sort((a, b) => {
+    let aNum = Number(a.replace(/[^0-9]/g, ''))
+    let bNum = Number(b.replace(/[^0-9]/g, ''))
+    
+    return aNum - bNum
+  })
+
+  // Make video file into mp3 (should just work without any weird conversion)
+  await fs.copyFileSync(original, original.replace(/\.[^.]*$/, '.mp3'))
+
+  // Create new converter instance
+  let conv = new Converter()
+  let input = conv.input({
+    f: 'image2pipe',
+    framerate: framerate
+  })
+
+  // Set audio input
+  conv.input(original.replace(/\.[^.]*$/, '.mp3'))
+  conv.output(outfile, {
+    vcodec: 'libx264',
+    pix_fmt: 'yuv420p'
+  })
+
+  frames.map(fname => () => 
+    new Promise((resolve, reject) =>
+      fs.createReadStream(framesPath + fname)
+      .on('end', resolve)
+      .on('error', reject)
+      .pipe(input, {
+        end: false
+      })
+    )
+  ).reduce((prev, next) => prev.then(next), Promise.resolve()).then(() => input.end())
+
+  conv.run()
 }
