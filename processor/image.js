@@ -12,32 +12,32 @@ const symbols = ['@', '#', '$', '%', ';', ':', '^', '*', ',', '.', '\'', ' ']
  *  Desired resolution.
  */
 exports.imageToText = (infile, resolution) => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     read(infile, (err, img) => {
-      if(err) reject(err)
-      
+      if (err) reject(err)
+  
       let str = ''
       let downscale = {
         x: img.bitmap.width / resolution.width,
         y: img.bitmap.height / resolution.height
       }
-
+  
       // Iterate through each pixel in the image
       for (let y = 0; y <= resolution.height; y++) {
         let row = ''
-
+  
         for (let x = 0; x <= resolution.width; x++) {
           // Since we downscale we only get the relevant pixels, evenly calculated/distributed
           let rgba = intToRGBA(img.getPixelColor(x * downscale.x, y * downscale.y))
           row += calculateSymbol(rgba, symbols)
-
+  
           // If we're done, start the next row
-          if(x == resolution.width) str += row + '\n'
+          if (x == resolution.width) str += row + '\n'
         }
-
+  
         // When we finish, we can return some useful data
         // that also includes the raw string
-        if(y == resolution.height) {
+        if (y == resolution.height) {
           resolve({
             width: resolution.width,
             height: resolution.height,
@@ -58,24 +58,24 @@ exports.imageToText = (infile, resolution) => {
  *  Path to the finished file.
  */
 exports.textToImage = (outfile, textObj) => {
-  return new Promise(async (resolve, reject) => {
-    if(typeof(textObj) !== 'object') reject('Invalid text object')
+  return new Promise((resolve, reject) => {
+    if (typeof (textObj) !== 'object') reject('Invalid text object')
 
     // Create canvas assuming we are supplied with an
     // object that contains the width, height, and text
     let canvas = createCanvas(textObj.width * 14, textObj.height * 14)
     let ctx = canvas.getContext('2d')
-
+  
     // Fill with white
     ctx.fillStyle = 'white'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
-
+  
     // Write text to image using monospaced font for equal spacing
     ctx.fillStyle = 'black'
     ctx.font = '10pt Consolas'
     ctx.fillText(textObj.content, 0, 0)
-
-    resolve(await writebuf(outfile, canvas.toDataURL('image/png')))
+  
+    resolve(writebuf(outfile, canvas.toDataURL('image/png')))
   })
 }
 
@@ -86,12 +86,10 @@ exports.textToImage = (outfile, textObj) => {
  * @param {String} img 
  *  Image to write.
  */
-function writebuf(filename, img) {
-  return new Promise(async (resolve, reject) => {
-    let data = img.replace(/^data:image\/\w+;base64,/, '')
-    let buf = new Buffer(data, 'base64')
-    resolve(await fs.writeFileSync(filename, buf))
-  })
+async function writebuf(filename, img) {
+  let data = img.replace(/^data:image\/\w+;base64,/, '')
+  let buf = new Buffer(data, 'base64')
+  return await fs.writeFileSync(filename, buf)
 }
 
 /**

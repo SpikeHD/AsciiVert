@@ -47,62 +47,73 @@ exports.videoToFrames = (path, outdir, framerate) => {
  * Convert all images (frames) in a path to ascii.
  * 
  * @param {String} framesPath 
+ *  Path where original frames are stored.
  * @param {String} outdir 
+ *  Path where frames will be exported.
  */
-exports.convertFrames = (framesPath, outdir, resolution) => {
-  return new Promise(async (resolve, reject) => {
-    const frames = fs.readdirSync(framesPath)
-    let textArray = []
+exports.convertFrames = async (framesPath, outdir, resolution) => {
+  const frames = fs.readdirSync(framesPath)
+  let textArray = []
 
-    // Progress bar values
-    let cur = 0
-    let percent = 0
+  // Progress bar values
+  let cur = 0
+  let percent = 0
 
-    console.log('Converting frames to text...')
+  console.log('Converting frames to text...')
 
-    const convertedText = frames.map(async frame => {
-      let retVal
+  const convertedText = frames.map(async frame => {
+    let retVal = await imageProc.imageToText(framesPath + frame, resolution)
 
-      await imageProc.imageToText(framesPath + frame, resolution).then(res => {
-        let currentPercent = Math.round((cur / frames.length) * 100)
-        cur++
-        if (percent != currentPercent) {
-          percent = currentPercent
-          util.updateProgress(percent, `${cur}/${frames.length} (${frame})`)
-        }
+    let currentPercent = Math.round((cur / frames.length) * 100)
+    cur++
+    if (percent != currentPercent) {
+      percent = currentPercent
+      util.updateProgress(percent, `${cur}/${frames.length} (${frame})`)
+    }
 
-        retVal = res
-      })
-
-      textArray.push({
-        obj: retVal,
-        filename: frame
-      })
+    return textArray.push({
+      obj: retVal,
+      filename: frame
     })
-
-    await Promise.all(convertedText)
-
-    console.log('Done!')
-
-    // Reset progress bar values
-    cur = 0
-    percent = 0
-
-    console.log('Converting text to images...')
-
-    const convertedImages = textArray.map(async text => {
-      let currentPercent = Math.round((cur / textArray.length) * 100)
-      cur++
-      if (percent != currentPercent) {
-        percent = currentPercent
-        util.updateProgress(percent, `${cur}/${textArray.length} (${text.filename})`)
-      }
-
-      await imageProc.textToImage(outdir + text.filename, text.obj)
-    })
-
-    await Promise.all(convertedImages)
-
-    console.log('Done!')
   })
+
+  await Promise.all(convertedText)
+
+  console.log('Done!')
+
+  // Reset progress bar values
+  cur = 0
+  percent = 0
+
+  console.log('Converting text to images...')
+
+  const convertedImages = textArray.map(async text => {
+    let currentPercent = Math.round((cur / textArray.length) * 100)
+    cur++
+    if (percent != currentPercent) {
+      percent = currentPercent
+      util.updateProgress(percent, `${cur}/${textArray.length} (${text.filename})`)
+    }
+    
+    let written = await imageProc.textToImage(outdir + text.filename, text.obj)
+    return written
+  })
+
+  await Promise.all(convertedImages)
+
+  console.log('Done!')
+}
+
+/**
+ * Converts a folder full of frames to a single video.
+ * 
+ * @param {String} framesPath 
+ *  Path full of frames.
+ * @param {String} outfile 
+ *  Path of the file that will be created.
+ * @param {String} original 
+ *  Path to original file (for audio extraction).
+ */
+exports.framesToVideo = async (framesPath, outfile, original) => {
+  
 }
