@@ -11,6 +11,8 @@ const { HTTPError } = require('./helper')
  */
 exports.imageRoute = (app) => {
   app.post('/image', async (req, res) => {
+    if(!req.files) return res.send(HTTPError(400, 'Looks like you forgot a file!'))
+    
     let file = req.files.files
     let id = createUniqueID()
     let dir = path.resolve(`./temp/images/${id}/`)
