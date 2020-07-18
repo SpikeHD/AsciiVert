@@ -45,7 +45,7 @@ To use the `/image` endpoint, you must send a `form-data` request with an image 
 
 Example:
 
-![Image from Postman](https://pasteboard.co/JibR3Nd.jpg)
+![postman](https://i.paste.pics/5a00b4edf2b8f6ff3020ec21da21bdb5.png?trs=7c74ea5877599d9b712bc0a138239b8f75236e1ccae520c4cb95ae3fa4bf98ff)
 
 ### /video
 
