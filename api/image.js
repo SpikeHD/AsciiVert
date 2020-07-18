@@ -3,6 +3,10 @@ const path = require('path')
 const { createUniqueID } = require('../util/util')
 const image = require('../processor/image')
 const { HTTPError } = require('./helper')
+const mimes = [
+  'image/png',
+  'image/jpeg'
+]
 
 /**
  * Route for uploading and converting a file.
@@ -18,9 +22,8 @@ exports.imageRoute = (app) => {
     let dir = path.resolve(`./temp/images/${id}/`)
     let resolution = req.body && req.body.resolution ? req.body.resolution:null
 
-    if(!file) {
-      return res.send(HTTPError(400, 'Looks like you forgot a file!'))
-    }
+    if(!file) return res.send(HTTPError(400, 'Looks like you forgot a file!'))
+    if(!mimes.includes(file.mimetype)) return res.send(HTTPError(400, 'Looks like that isn\'t a supported file...'))
 
     await fs.mkdirSync(dir)
     await fs.writeFileSync(`${dir}/${file.name}`, file.data)
