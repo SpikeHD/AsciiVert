@@ -7,6 +7,7 @@ const video = require('./video')
 let app = express()
 
 // Setup files in case they do not exist.
+if(!fs.existsSync(path.resolve(`./temp/`))) fs.mkdirSync(path.resolve(`./temp/`))
 if(!fs.existsSync(path.resolve(`./temp/images/`))) fs.mkdirSync(path.resolve(`./temp/images/`))
 if(!fs.existsSync(path.resolve(`./temp/original_frames/`))) fs.mkdirSync(path.resolve(`./temp/original_frames/`))
 if(!fs.existsSync(path.resolve(`./temp/converted_frames/`))) fs.mkdirSync(path.resolve(`./temp/converted_frames/`))
