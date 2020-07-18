@@ -22,6 +22,8 @@ exports.videoToFrames = (path, outdir, framerate) => {
 
       duration = metadata.format.duration
 
+      console.log(duration)
+
       ffmpeg(path)
         .on('error', (e) => reject(e))
         .screenshots({

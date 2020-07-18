@@ -1,3 +1,5 @@
+const { randomBytes } = require('crypto')
+
 /**
  * Write progress bar to terminal screen.
  * 
@@ -15,4 +17,11 @@ exports.updateProgress = (percentage, info) => {
     process.stdout.clearLine()
     process.stdout.cursorTo(0)
   }
+}
+
+/**
+ * Create a unique, random string to associate with image.
+ */
+exports.createUniqueID = () => {
+  return randomBytes(20).toString('hex')
 }
