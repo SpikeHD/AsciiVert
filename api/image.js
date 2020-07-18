@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { createUniqueID } = require('../util/util')
 const image = require('../processor/image')
+const { HTTPError } = require('./helper')
 
 /**
  * Route for uploading and converting a file.
@@ -15,7 +16,7 @@ exports.imageRoute = (app) => {
     let dir = path.resolve(`./temp/images/${id}/`)
 
     if(!file) {
-      return res.send(Buffer(JSON.stringify({message: 'failure', filename: id})))
+      return res.send(HTTPError(400, 'Looks like you forgot a file!'))
     }
 
     await fs.mkdirSync(dir)
