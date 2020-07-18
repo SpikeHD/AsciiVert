@@ -1,8 +1,15 @@
 const express = require('express')
 const fu = require('express-fileupload')
+const fs = require('fs')
+const path = require('path')
 const image = require('./image')
 const video = require('./video')
 let app = express()
+
+// Setup files in case they do not exist.
+if(!fs.existsSync(path.resolve(`./temp/images/`))) fs.mkdirSync(path.resolve(`./temp/images/`))
+if(!fs.existsSync(path.resolve(`./temp/original_frames/`))) fs.mkdirSync(path.resolve(`./temp/original_frames/`))
+if(!fs.existsSync(path.resolve(`./temp/converted_frames/`))) fs.mkdirSync(path.resolve(`./temp/converted_frames/`))
 
 // Allow for getting files.
 app.use(fu())

@@ -5,8 +5,6 @@
  */
 exports.videoRoute = (app) => {
   app.get('/video', (req, res) => {
-    console.log(req.files)
-
     res.end(Buffer.from("{ message: 'Success' }"))
   })
 }
