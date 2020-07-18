@@ -16,17 +16,20 @@ exports.imageToText = (infile, resolution) => {
     read(infile, (err, img) => {
       if (err) reject(err)
 
+      let iHeight = img.bitmap.height
+      let iWidth = img.bitmap.width
+
       if(!resolution) {
         resolution = {
-          width: img.bitmap.width,
-          height: img.bitmap.height
+          width: iWidth,
+          height: iHeight
         }
       }
   
       let str = ''
       let downscale = {
-        x: img.bitmap.width / resolution.width,
-        y: img.bitmap.height / resolution.height
+        x: Number(iWidth) / Number(resolution.width),
+        y: Number(iHeight) / Number(resolution.height)
       }
   
       // Iterate through each pixel in the image
