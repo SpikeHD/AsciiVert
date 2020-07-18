@@ -15,7 +15,7 @@ exports.imageRoute = (app) => {
     let dir = path.resolve(`./temp/images/${id}/`)
 
     if(!file) {
-      return res.send(Buffer(JSON.stringify({message: 'failure', filename: dir})))
+      return res.send(Buffer(JSON.stringify({message: 'failure', filename: id})))
     }
 
     await fs.mkdirSync(dir)
