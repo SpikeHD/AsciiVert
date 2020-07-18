@@ -70,7 +70,7 @@ exports.textToImage = (outfile, textObj) => {
 
     // Create canvas assuming we are supplied with an
     // object that contains the width, height, and text
-    let canvas = createCanvas(textObj.width * 14, textObj.height * 14)
+    let canvas = createCanvas(textObj.width * 14, textObj.height * 15)
     let ctx = canvas.getContext('2d')
   
     // Fill with white

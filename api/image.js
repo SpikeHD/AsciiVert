@@ -20,7 +20,7 @@ exports.imageRoute = (app) => {
     let file = req.files.files
     let id = createUniqueID()
     let dir = path.resolve(`./temp/images/${id}/`)
-    let resolution = req.body && req.body.resolution ? req.body.resolution:null
+    let resolution = req.body && req.body.resolution ? JSON.parse(req.body.resolution):null
 
     if(!file) return res.send(HTTPError(400, 'Looks like you forgot a file!'))
     if(!mimes.includes(file.mimetype)) return res.send(HTTPError(400, 'Looks like that isn\'t a supported file...'))
