@@ -15,6 +15,13 @@ exports.imageToText = (infile, resolution) => {
   return new Promise((resolve, reject) => {
     read(infile, (err, img) => {
       if (err) reject(err)
+
+      if(!resolution) {
+        resolution = {
+          width: img.bitmap.width,
+          height: img.bitmap.height
+        }
+      }
   
       let str = ''
       let downscale = {

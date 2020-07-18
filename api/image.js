@@ -16,6 +16,7 @@ exports.imageRoute = (app) => {
     let file = req.files.files
     let id = createUniqueID()
     let dir = path.resolve(`./temp/images/${id}/`)
+    let resolution = req.body && req.body.resolution ? req.body.resolution:null
 
     if(!file) {
       return res.send(HTTPError(400, 'Looks like you forgot a file!'))
@@ -24,7 +25,7 @@ exports.imageRoute = (app) => {
     await fs.mkdirSync(dir)
     await fs.writeFileSync(`${dir}/${file.name}`, file.data)
 
-    let text = await image.imageToText(`${dir}/${file.name}`, {width: 400, height: 400})
+    let text = await image.imageToText(`${dir}/${file.name}`, resolution)
     
     await image.textToImage(`${dir}/converted.jpg`, text)
 
