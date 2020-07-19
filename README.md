@@ -1,4 +1,4 @@
-# MediaToAscii - Convert images and videos to ASCII art!
+# AsciiVert - Convert images and videos to ASCII art!
 
 This repository aims to provide a very needed, very important service: converting images and videos to ASCII art!
 
