@@ -4,7 +4,6 @@ const { HTTPResponse, dirSanitize } = require('./helper')
 
 exports.fileRoute = (app) => {
   app.get('/file', async (req, res) => {
-    console.log(req.query)
     if (!req.query.id) return res.send(HTTPResponse(400, 'Invalid form body'))
 
     let id = dirSanitize(req.query.id)
