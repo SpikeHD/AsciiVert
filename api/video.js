@@ -45,5 +45,9 @@ exports.videoRoute = (app) => {
 
     // Finally done, now send the new video back
     res.sendFile(`${dir}/${file.name.replace('.mp4', 'converted.mp4')}`)
+
+    // Cleanup
+    await fs.rmdirSync(`${dir}/original_frames/`)
+    await fs.rmdirSync(`${dir}/converted_frames/`)
   })
 }
