@@ -15,6 +15,6 @@ exports.fileRoute = (app) => {
     if (!fs.existsSync(folder)) return res.send(HTTPResponse(404, 'File not found'))
 
     // Send file (there should only ever be one)
-    res.sendFile(folder + fs.readdirSync(folder)[0])
+    res.sendFile(folder + '/' + fs.readdirSync(folder)[0])
   })
 }
