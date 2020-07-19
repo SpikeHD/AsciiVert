@@ -36,7 +36,7 @@ exports.videoRoute = (app) => {
     await fs.writeFileSync(`${dir}/${file.name}`, file.data)
 
     // Check video length and frames to calculate whether it would go over the limit
-    await ffmpeg.ffprobe(`${dir}/${file.name}`, (err, metadata) => {
+    ffmpeg.ffprobe(`${dir}/${file.name}`, async (err, metadata) => {
       if(err) return err
 
       let length = metadata.format.duration
@@ -45,7 +45,7 @@ exports.videoRoute = (app) => {
       // Calculate amount of frames, and if it's too high, calculate changes needed.
       if (totalFrames > frame_limit) {
         let frameReduction = Math.round(frame_limit / length)
-        let lengthReduction = totalFrames / framerate
+        let lengthReduction = frame_limit / framerate
 
         return res.status(400).send({
           message: 'Frame limit reached, consider reducing framerate or video length',
@@ -53,24 +53,26 @@ exports.videoRoute = (app) => {
           reduce_length_to: lengthReduction
         })
       }
+
+      if (res.headersSent) return
+
+      // Since we know it *should* be okay, send a response with the file ID
+      res.status(200).send(id)
+  
+      // Export the video into frames
+      await video.videoToFrames(`${dir}/${file.name}`, `${dir}/original_frames/`, framerate)
+  
+      // Convert each frame
+      await video.convertFrames(`${dir}/original_frames/`, `${dir}/converted_frames/`, resolution)
+  
+      // Now that we're almost done, we create a completed directory where it can be accessed.
+      await fs.mkdirSync(`./temp/completed/${id}`)
+  
+      // Stitch frames back into video
+      await video.framesToVideo(`${dir}/converted_frames/`, `./temp/completed/${id}/${file.name.replace('.mp4', 'converted.mp4')}`, `${dir}/${file.name}`, framerate)
+  
+      // Cleanup
+      await fs.rmdirSync(dir, {recursive: true})
     })
-
-    // Since we know it *should* be okay, send a response with the file ID
-    res.status(200).send(id)
-
-    // Export the video into frames
-    await video.videoToFrames(`${dir}/${file.name}`, `${dir}/original_frames/`, framerate)
-
-    // Convert each frame
-    await video.convertFrames(`${dir}/original_frames/`, `${dir}/converted_frames/`, resolution)
-
-    // Now that we're almost done, we create a completed directory where it can be accessed.
-    await fs.mkdirSync(`./temp/completed/${id}`)
-
-    // Stitch frames back into video
-    await video.framesToVideo(`${dir}/converted_frames/`, `./temp/completed/${id}/${file.name.replace('.mp4', 'converted.mp4')}`, `${dir}/${file.name}`, framerate)
-
-    // Cleanup
-    await fs.rmdirSync(dir, {recursive: true})
   })
 }
