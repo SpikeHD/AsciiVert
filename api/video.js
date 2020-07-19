@@ -39,7 +39,7 @@ exports.videoRoute = (app) => {
     await fs.writeFileSync(`${dir}/${file.name}`, file.data)
 
     // Check video length and frames to calculate whether it would go over the limit
-    ffmpeg.ffprobe(path, (err, metadata) => {
+    ffmpeg.ffprobe(`${dir}/${file.name}`, (err, metadata) => {
       if(err) return err
 
       let length = metadata.format.duration
