@@ -5,7 +5,7 @@ This repository aims to provide a very needed, very important service: convertin
 ## Goals
 
 * Public website [TODO]
-* Public API [WIP]
+* Public API [Done]
 * CLI version [WIP]
 
 ## Setup
@@ -41,7 +41,7 @@ To setup the base program, just run `npm install` in the main project directory.
 There are currently two endpoints, `/image` and `/video`.
 
 ### /image
-To use the `/image` endpoint, you must send a `form-data` request with an image attached, and optionally a resolution to convert to.
+To use the `/image` endpoint, you must send a `form-data` request with an image attached in the `files` field, and optionally a resolution to convert to.
 
 Example:
 
