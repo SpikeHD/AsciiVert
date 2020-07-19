@@ -2,7 +2,6 @@ const fs = require('fs')
 const path = require('path')
 const { createUniqueID } = require('../util/util')
 const video = require('../processor/video')
-const { HTTPResponse } = require('./helper')
 const mimes = [
   'video/mp4'
 ]
@@ -14,7 +13,7 @@ const mimes = [
  */
 exports.videoRoute = (app) => {
   app.post('/video', async (req, res) => {
-    if(!req.files) return res.send(HTTPResponse(400, 'Looks like you forgot a file!'))
+    if(!req.files) return res.status(400).send('Looks like you forgot a file!')
     
     let file = req.files.files
     let id = createUniqueID(10)
@@ -22,11 +21,11 @@ exports.videoRoute = (app) => {
     let resolution = req.body && req.body.resolution ? JSON.parse(req.body.resolution):null
     let framerate = req.body && req.body.framerate ? JSON.parse(req.body.framerate):10
 
-    if(!file) return res.send(HTTPResponse(400, 'Looks like you forgot a file!'))
-    if(!mimes.includes(file.mimetype)) return res.send(HTTPResponse(400, 'Looks like that isn\'t a supported file...'))
+    if(!file) return res.status(400).send('Looks like you forgot a file!')
+    if(!mimes.includes(file.mimetype)) return res.status(400).send('Looks like that isn\'t a valid file format!')
 
     // Since we know it *should* be okay, send a response with the file ID
-    res.send(HTTPResponse(200, id))
+    res.status(200).send(id)
 
     await fs.mkdirSync(dir)
 

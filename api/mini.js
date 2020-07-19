@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { createUniqueID } = require('../util/util')
 const image = require('../processor/image')
-const { HTTPResponse } = require('./helper')
+const { mini_resolution_limit } = require('../config.json')
 const mimes = [
   'image/png',
   'image/jpeg'
@@ -15,16 +15,18 @@ const mimes = [
  */
 exports.miniRoute = (app) => {
   app.post('/mini', async (req, res) => {
-    if(!req.files) return res.send(HTTPResponse(400, 'Looks like you forgot a file!'))
+    if(!req.files) return res.status(400).send('Looks like you forgot a file!')
     
     let file = req.files.files
     let id = createUniqueID()
     let dir = path.resolve(`./temp/images/${id}/`)
     let resolution = req.body && req.body.resolution ? JSON.parse(req.body.resolution):null
+    let valid_res = resolution && (resolution.width <= mini_resolution_limit.width && resolution.height <= mini_resolution_limit.height)
   
     // Data checking
-    if(!file) return res.send(HTTPResponse(400, 'Looks like you forgot a file!'))
-    if(!mimes.includes(file.mimetype)) return res.send(HTTPResponse(400, 'Looks like that isn\'t a supported file...'))
+    if(!file) return res.status(400).send('Looks like you forgot a file!')
+    if(!mimes.includes(file.mimetype)) return res.status(400).send('Looks like that isn\'t a supported file format!')
+    if(!valid_res) return res.status(400).send('Looks like that image resolution is too big!')
   
     // Create temp dir for files
     await fs.mkdirSync(dir)

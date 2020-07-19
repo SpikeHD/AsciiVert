@@ -1,10 +1,10 @@
 const fs = require('fs')
 const path = require('path')
-const { HTTPResponse, dirSanitize } = require('./helper')
+const { dirSanitize } = require('./helper')
 
 exports.fileRoute = (app) => {
   app.get('/file', async (req, res) => {
-    if (!req.query.id) return res.send(HTTPResponse(400, 'Invalid form body'))
+    if (!req.query.id) return res.status(400).send('Invalid form body')
 
     let id = dirSanitize(req.query.id)
 
@@ -12,7 +12,7 @@ exports.fileRoute = (app) => {
     let folder = path.resolve(`./temp/completed/${id}/`)
 
     // Check for file
-    if (!fs.existsSync(folder)) return res.send(HTTPResponse(404, 'File not found'))
+    if (!fs.existsSync(folder)) return res.status(404).send('File not found')
 
     // Send file (there should only ever be one)
     res.sendFile(folder + '/' + fs.readdirSync(folder)[0])
