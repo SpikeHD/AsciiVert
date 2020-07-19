@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { createUniqueID } = require('../util/util')
 const video = require('../processor/video')
-const { HTTPError } = require('./helper')
+const { HTTPResponse, dirSanitize } = require('./helper')
 const mimes = [
   'video/mp4'
 ]
@@ -14,7 +14,7 @@ const mimes = [
  */
 exports.videoRoute = (app) => {
   app.post('/video', async (req, res) => {
-    if(!req.files) return res.send(HTTPError(400, 'Looks like you forgot a file!'))
+    if(!req.files) return res.send(HTTPResponse(400, 'Looks like you forgot a file!'))
     
     let file = req.files.files
     let id = createUniqueID(10)
@@ -22,9 +22,12 @@ exports.videoRoute = (app) => {
     let resolution = req.body && req.body.resolution ? JSON.parse(req.body.resolution):null
     let framerate = req.body && req.body.framerate ? JSON.parse(req.body.framerate):10
 
-    if(!file) return res.send(HTTPError(400, 'Looks like you forgot a file!'))
-    if(!mimes.includes(file.mimetype)) return res.send(HTTPError(400, 'Looks like that isn\'t a supported file...'))
-    
+    if(!file) return res.send(HTTPResponse(400, 'Looks like you forgot a file!'))
+    if(!mimes.includes(file.mimetype)) return res.send(HTTPResponse(400, 'Looks like that isn\'t a supported file...'))
+
+    // Since we know it *should* be okay, send a response with the file ID
+    res.send(HTTPResponse(200, id))
+
     await fs.mkdirSync(dir)
 
     // Make temp dirs
@@ -40,14 +43,13 @@ exports.videoRoute = (app) => {
     // Convert each frame
     await video.convertFrames(`${dir}/original_frames/`, `${dir}/converted_frames/`, resolution)
 
-    // Stitch frames back into video
-    await video.framesToVideo(`${dir}/converted_frames/`, `${dir}/${file.name.replace('.mp4', 'converted.mp4')}`, `${dir}/${file.name}`, framerate)
+    // Now that we're almost done, we create a completed directory where it can be accessed.
+    await fs.mkdirSync(`./temp/completed/${id}`)
 
-    // Finally done, now send the new video back
-    res.sendFile(`${dir}/${file.name.replace('.mp4', 'converted.mp4')}`)
+    // Stitch frames back into video
+    await video.framesToVideo(`${dir}/converted_frames/`, `./temp/completed/${id}/${file.name.replace('.mp4', 'converted.mp4')}`, `${dir}/${file.name}`, framerate)
 
     // Cleanup
-    await fs.rmdirSync(`${dir}/original_frames/`)
-    await fs.rmdirSync(`${dir}/converted_frames/`)
+    await fs.rmdirSync(dir, {recursive: true})
   })
 }

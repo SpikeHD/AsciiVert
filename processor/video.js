@@ -135,9 +135,6 @@ exports.framesToVideo = async (framesPath, outfile, original, framerate) => {
     framerate: framerate
   })
 
-  console.log(`OG: ${original}`)
-  console.log(`outfile path: ${outfile}`)
-
   // Set audio input
   conv.input(original.replace(/\.[^.]*$/, '.mp3'))
   conv.output(outfile, {

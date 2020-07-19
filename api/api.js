@@ -11,6 +11,7 @@ let app = express()
 if(!fs.existsSync(path.resolve(`./temp/`))) fs.mkdirSync(path.resolve(`./temp/`))
 if(!fs.existsSync(path.resolve(`./temp/images/`))) fs.mkdirSync(path.resolve(`./temp/images/`))
 if(!fs.existsSync(path.resolve(`./temp/videos/`))) fs.mkdirSync(path.resolve(`./temp/videos/`))
+if(!fs.existsSync(path.resolve(`./temp/completed/`))) fs.mkdirSync(path.resolve(`./temp/completed/`))
 
 // Allow for getting files.
 app.use(fu())
