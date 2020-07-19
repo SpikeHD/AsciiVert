@@ -26,9 +26,6 @@ exports.videoRoute = (app) => {
     if(!file) return res.status(400).send('Looks like you forgot a file!')
     if(!mimes.includes(file.mimetype)) return res.status(400).send('Looks like that isn\'t a valid file format!')
 
-    // Since we know it *should* be okay, send a response with the file ID
-    res.status(200).send(id)
-
     await fs.mkdirSync(dir)
 
     // Make temp dirs
@@ -39,7 +36,7 @@ exports.videoRoute = (app) => {
     await fs.writeFileSync(`${dir}/${file.name}`, file.data)
 
     // Check video length and frames to calculate whether it would go over the limit
-    ffmpeg.ffprobe(`${dir}/${file.name}`, (err, metadata) => {
+    await ffmpeg.ffprobe(`${dir}/${file.name}`, (err, metadata) => {
       if(err) return err
 
       let length = metadata.format.duration
@@ -57,6 +54,9 @@ exports.videoRoute = (app) => {
         })
       }
     })
+
+    // Since we know it *should* be okay, send a response with the file ID
+    res.status(200).send(id)
 
     // Export the video into frames
     await video.videoToFrames(`${dir}/${file.name}`, `${dir}/original_frames/`, framerate)
