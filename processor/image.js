@@ -15,6 +15,7 @@ exports.imageToText = (infile, resolution) => {
   return new Promise((resolve, reject) => {
     read(infile, (err, img) => {
       if (err) reject(err)
+      if (!img) reject ('Invalid image file.')
 
       let iHeight = img.bitmap.height
       let iWidth = img.bitmap.width

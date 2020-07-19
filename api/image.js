@@ -9,7 +9,7 @@ const mimes = [
 ]
 
 /**
- * Route for uploading and converting a file.
+ * Route for uploading and converting an image.
  * 
  * @param {Express} app 
  */

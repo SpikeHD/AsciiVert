@@ -22,6 +22,6 @@ exports.updateProgress = (percentage, info) => {
 /**
  * Create a unique, random string to associate with image.
  */
-exports.createUniqueID = () => {
-  return randomBytes(20).toString('hex')
+exports.createUniqueID = (length = 20) => {
+  return randomBytes(length).toString('hex')
 }
