@@ -5,6 +5,7 @@ const path = require('path')
 const image = require('./image')
 const video = require('./video')
 const file = require('./getfile')
+const mini = require('./mini')
 let app = express()
 
 // Setup files in case they do not exist.
@@ -21,5 +22,6 @@ app.listen(8080, () => {
   image.imageRoute(app)
   video.videoRoute(app)
   file.fileRoute(app)
+  mini.miniRoute(app)
   console.log('API Server is up')
 })

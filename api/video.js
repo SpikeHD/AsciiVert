@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { createUniqueID } = require('../util/util')
 const video = require('../processor/video')
-const { HTTPResponse, dirSanitize } = require('./helper')
+const { HTTPResponse } = require('./helper')
 const mimes = [
   'video/mp4'
 ]
