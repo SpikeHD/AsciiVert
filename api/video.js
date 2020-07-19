@@ -46,7 +46,7 @@ exports.videoRoute = (app) => {
       let totalFrames = parseInt(length, 10) * framerate
 
       // Calculate amount of frames, and if it's too high, calculate changes needed.
-      if (totalFrames > framelimit) {
+      if (totalFrames > frame_limit) {
         let frameReduction = Math.round(frame_limit / length)
         let lengthReduction = totalFrames / framerate
 
