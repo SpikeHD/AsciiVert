@@ -1,7 +1,9 @@
 const fs = require('fs')
 const path = require('path')
+const ffmpeg = require('fluent-ffmpeg')
 const { createUniqueID } = require('../util/util')
 const video = require('../processor/video')
+const { frame_limit } = require('../config.json')
 const mimes = [
   'video/mp4'
 ]
@@ -35,6 +37,26 @@ exports.videoRoute = (app) => {
 
     // Write video file to disk
     await fs.writeFileSync(`${dir}/${file.name}`, file.data)
+
+    // Check video length and frames to calculate whether it would go over the limit
+    ffmpeg.ffprobe(path, (err, metadata) => {
+      if(err) return err
+
+      let length = metadata.format.duration
+      let totalFrames = parseInt(length, 10) * framerate
+
+      // Calculate amount of frames, and if it's too high, calculate changes needed.
+      if (totalFrames > framelimit) {
+        let frameReduction = Math.round(frame_limit / length)
+        let lengthReduction = totalFrames / framerate
+
+        return res.status(400).send({
+          message: 'Frame limit reached, consider reducing framerate or video length',
+          reduce_frames_to: frameReduction,
+          reduce_length_to: lengthReduction
+        })
+      }
+    })
 
     // Export the video into frames
     await video.videoToFrames(`${dir}/${file.name}`, `${dir}/original_frames/`, framerate)
