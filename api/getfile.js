@@ -3,10 +3,11 @@ const path = require('path')
 const { HTTPResponse, dirSanitize } = require('./helper')
 
 exports.fileRoute = (app) => {
-  app.post('/file', async (req, res) => {
-    if (!req.body) return res.send(HTTPResponse(400, 'Invalid form body'))
+  app.get('/file', async (req, res) => {
+    console.log(req.query)
+    if (!req.query.id) return res.send(HTTPResponse(400, 'Invalid form body'))
 
-    let id = dirSanitize(req.body.id)
+    let id = dirSanitize(req.query.id)
 
     // Get file path using parameters
     let folder = path.resolve(`./temp/completed/${id}/`)
