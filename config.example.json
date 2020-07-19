@@ -1,0 +1,11 @@
+{
+  "frame_limit":300,
+  "resolution_limit":{
+    "width": 500,
+    "height": 500
+  },
+  "mini_resolution_limit":{
+    "width":100,
+    "height":100
+  }
+}
