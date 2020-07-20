@@ -7,6 +7,7 @@ const { randomBytes } = require('crypto')
  * @param {String} info 
  */
 exports.updateProgress = (percentage, info) => {
+  /*
   let bar = '#'.repeat(percentage/5) + '_'.repeat(20-(percentage/5))
 
   process.stdout.clearLine()
@@ -17,6 +18,7 @@ exports.updateProgress = (percentage, info) => {
     process.stdout.clearLine()
     process.stdout.cursorTo(0)
   }
+  */
 }
 
 /**
