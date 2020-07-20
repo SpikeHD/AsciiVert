@@ -64,6 +64,10 @@ body {
   margin: 0 auto;
 }
 
+.image_mini_result {
+  font-size: 9px;
+}
+
 .footer {
   width: 95%;
   margin: 0 auto;

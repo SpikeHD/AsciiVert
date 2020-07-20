@@ -18,7 +18,7 @@
       </pre>
       <p>Convert images and videos to Ascii art!</p>
     </div>
-    <div class="main__body" style="height: 1000px;">
+    <div class="main__body">
       <div class="menu__boxes">
         <div class="box" onclick="menuHandle('image__ascii')">
           Convert an image to an ascii image
@@ -36,11 +36,14 @@
           <input type="file" id="image_file">
           <span>Resolution <input type="number" id="image_width"> x <input type="number" id="image_height"></span>
           <input type="button" value="Submit" onclick="ajaxSubmitImage('image_file')">
-          <a class="response"></a>
+          <a class="image_ascii_result"></a>
         </div>
         <div class="image__text">
           <p>Select a file to convert to raw ascii text</p>
-          <input type="file">
+          <input type="file" id="image_mini">
+          <span>Resolution <input type="number" id="image_width"> x <input type="number" id="image_height"></span>
+          <input type="button" value="Submit" onclick="ajaxSubmitMini('image_mini')">
+          <pre class="image_mini_result"></pre>
         </div>
         <div class="video__ascii">
           <p>Select a video file to convert to an ascii-art video</p>
