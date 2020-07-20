@@ -28,24 +28,24 @@ function ajaxSubmitImage(inputId) {
 }
 
 function ajaxSubmitMini(inputId) {
-    // Get file from file select
-    var file = document.getElementById(inputId).files[0]
-    var resolution = {
-      width: $(`#${inputId}`).parent().find(`#image_width`).val(),
-      height: $(`#${inputId}`).parent().find(`#image_height`).val()
-    }
-  
-    // FormData object
-    var formData = new FormData()
-    formData.append('files', file, file.name)
-    formData.append('resolution', JSON.stringify(resolution))
-  
-    var xhr = new XMLHttpRequest()
-  
-    // Send request
-    xhr.open('POST', '/mini', true)
-    xhr.onreadystatechange = function() {
-      $('.image_mini_result').text(JSON.parse(xhr.responseText).content)
-    }
-    xhr.send(formData)
+  // Get file from file select
+  var file = document.getElementById(inputId).files[0]
+  var resolution = {
+    width: $(`#${inputId}`).parent().find(`#image_width`).val(),
+    height: $(`#${inputId}`).parent().find(`#image_height`).val()
+  }
+
+  // FormData object
+  var formData = new FormData()
+  formData.append('files', file, file.name)
+  formData.append('resolution', JSON.stringify(resolution))
+
+  var xhr = new XMLHttpRequest()
+
+  // Send request
+  xhr.open('POST', '/mini', true)
+  xhr.onreadystatechange = function () {
+    $('.image_mini_result').text(JSON.parse(xhr.responseText).content)
+  }
+  xhr.send(formData)
 }
