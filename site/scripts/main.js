@@ -34,8 +34,6 @@ function ajaxSubmitMini(inputId) {
       width: $(`#${inputId}`).parent().find(`#image_width`).val(),
       height: $(`#${inputId}`).parent().find(`#image_height`).val()
     }
-
-    console.log(resolution)
   
     // FormData object
     var formData = new FormData()
@@ -47,7 +45,6 @@ function ajaxSubmitMini(inputId) {
     // Send request
     xhr.open('POST', '/mini', true)
     xhr.onreadystatechange = function() {
-      console.log(xhr.responseText)
       $('.image_mini_result').text(JSON.parse(xhr.responseText).content)
     }
     xhr.send(formData)
