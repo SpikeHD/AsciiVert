@@ -33,7 +33,10 @@
       <div class="menu__forms">
         <div class="image__ascii">
           <p>Select a file to convert to an ascii-art image</p>
-          <input type="file">
+          <input type="file" id="image_file">
+          <span>Resolution <input type="number" id="image_width"> x <input type="number" id="image_height"></span>
+          <input type="button" value="Submit" onclick="ajaxSubmitImage('image_file')">
+          <a class="response"></a>
         </div>
         <div class="image__text">
           <p>Select a file to convert to raw ascii text</p>

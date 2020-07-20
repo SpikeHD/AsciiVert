@@ -26,7 +26,7 @@ exports.imageRoute = (app) => {
     // Data checking
     if(!file) return res.status(400).send('Looks like you forgot a file!')
     if(!mimes.includes(file.mimetype)) return res.status(400).send('Looks like that isn\'t a valid file format!')
-    if(!valid_res) return res.send(400).send('Looks like that image resolution is too big!')
+    if(!valid_res) return res.status(400).send('Looks like that image resolution is too big!')
 
     // Since we know it *should* be okay, send a response with the file ID
     res.status(200).send(id)
