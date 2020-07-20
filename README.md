@@ -26,7 +26,7 @@ To use the CLI version, TODO
 
 ## Using the API
 
-There are currently two endpoints, `/image` and `/video`.
+There are currently four endpoints, `/image`, `/video`m `/mini` and `/file`.
 
 ### /image
 To use the `/image` endpoint, you must send a `form-data` POST request with an image attached in the `files` field, and a resolution to convert to.
