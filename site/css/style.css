@@ -49,6 +49,7 @@ body {
   padding: 20px;
   width: 25%;
   text-align: center;
+  user-select: none;
 }
 
 .box:hover {
