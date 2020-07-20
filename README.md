@@ -41,7 +41,7 @@ To setup the base program, just run `npm install` in the main project directory.
 There are currently two endpoints, `/image` and `/video`.
 
 ### /image
-To use the `/image` endpoint, you must send a `form-data` request with an image attached in the `files` field, and optionally a resolution to convert to.
+To use the `/image` endpoint, you must send a `form-data` request with an image attached in the `files` field, and a resolution to convert to.
 
 Example:
 
@@ -49,4 +49,8 @@ Example:
 
 ### /video
 
-TODO
+To use the `/video` endpoint, you must send a `form-data` request with a video file in the `files` field, a resolution, and a framerate.
+
+Example:
+
+![postman](https://user-images.githubusercontent.com/25207995/87893157-dec66000-c9f3-11ea-8780-76aac017c9b1.png)
