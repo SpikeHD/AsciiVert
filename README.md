@@ -41,7 +41,7 @@ To setup the base program, just run `npm install` in the main project directory.
 There are currently two endpoints, `/image` and `/video`.
 
 ### /image
-To use the `/image` endpoint, you must send a `form-data` request with an image attached in the `files` field, and a resolution to convert to.
+To use the `/image` endpoint, you must send a `form-data` POST request with an image attached in the `files` field, and a resolution to convert to.
 
 Example:
 
@@ -49,8 +49,24 @@ Example:
 
 ### /video
 
-To use the `/video` endpoint, you must send a `form-data` request with a video file in the `files` field, a resolution, and a framerate.
+To use the `/video` endpoint, you must send a `form-data` POST request with a video file in the `files` field, a resolution, and a framerate.
 
 Example:
 
 ![postman](https://user-images.githubusercontent.com/25207995/87893157-dec66000-c9f3-11ea-8780-76aac017c9b1.png)
+
+### /mini
+
+Using the `/mini` endpoint is similar to the `/image` endpoint in that you only need to supply an image and resolution, but the resolution limit is smaller and it returns raw text instead.
+
+Example:
+
+![postman](https://user-images.githubusercontent.com/25207995/87893303-5d230200-c9f4-11ea-9dc0-1c7d9d8b24c9.png)
+
+### /file
+
+When using the `/image` or `/video` endpoints, the request will immediately return a file ID. While the file may not be ready immediately, when it is, you can GET the `/file` endpoint with a `id` URI parameter (eg. `/file?id=1234`).
+
+Example:
+
+![postman](https://user-images.githubusercontent.com/25207995/87893495-f0f4ce00-c9f4-11ea-9596-c6a905a3bcce.png)
