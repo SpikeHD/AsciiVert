@@ -25,3 +25,6 @@ app.listen(8080, () => {
   mini.miniRoute(app)
   console.log('API Server is up')
 })
+
+// Default site route
+app.use(express.static(path.resolve('./site/')))
