@@ -55,6 +55,14 @@ body {
   cursor: pointer;
 }
 
+.image__ascii,
+.image__text,
+.video__ascii {
+  display: none;
+  width: 95%;
+  margin: 0 auto;
+}
+
 .footer {
   width: 95%;
   margin: 0 auto;
