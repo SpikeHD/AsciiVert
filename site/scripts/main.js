@@ -7,8 +7,8 @@ function ajaxSubmitImage(inputId) {
   // Get file from file select
   var file = document.getElementById(inputId).files[0]
   var resolution = {
-    width: $(`#${inputId}`).parent(`#image_width`).val(),
-    height: $(`#${inputId}`).parent(`#image_height`).val()
+    width: $(`#${inputId}`).parent().find(`#image_width`).val(),
+    height: $(`#${inputId}`).parent().find(`#image_height`).val()
   }
 
   // FormData object
