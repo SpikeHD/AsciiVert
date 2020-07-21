@@ -14,6 +14,14 @@ video {
   margin: 10px auto;
 }
 
+.alert {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  display: none;
+  color: red;
+}
+
 .main__header {
   height: 175px;
   width: 95%;

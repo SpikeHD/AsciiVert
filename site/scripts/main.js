@@ -110,6 +110,29 @@ function ajaxSubmitVideo(inputId) {
   xhr.send(formData)
 }
 
+function inputWatcher() {
+  var image_inputs = $(".image__ascii").find("input[type='number']")
+  var mini_inputs = $(".image__text").find("input[type='number']")
+
+  image_inputs.change((evt, x) => {
+    var elm = $(evt.target)
+    if($(elm).val() > 500) {
+      $(elm).parent().append('<p class="alert">Warning: both dimensions need to be under 500</p>')
+      $(elm).parents().find('.alert').slideToggle('fast')
+    }
+  })
+
+  mini_inputs.change((evt, x) => {
+    var elm = $(evt.target)
+    if($(elm).val() > 100) {
+      $(elm).parent().append('<p class="alert">Warning: both dimensions need to be under 100</p>')
+      $(elm).parents().find('.alert').slideToggle('fast')
+    }
+  })
+}
+
+$(document).ready(() => inputWatcher())
+
 function invokeVideoChecker(video, source) {
   var interval = setInterval(() => {
     if(video.prop("readyState") < 3) {
