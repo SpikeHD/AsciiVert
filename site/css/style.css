@@ -47,18 +47,17 @@ body {
 
 .box {
   padding: 20px;
-  width: 25%;
+  width: 15%;
   text-align: center;
   user-select: none;
 }
 
-.box:hover {
-  cursor: pointer;
-}
+.box:hover { cursor: pointer; }
 
 .image__ascii,
 .image__text,
-.video__ascii {
+.video__ascii,
+.info {
   display: none;
   width: 95%;
   margin: 0 auto;
@@ -74,3 +73,25 @@ body {
   padding: 10px;
   border-top: 1px solid lightgrey;
 }
+
+.footer span {
+  font-size: 14px;
+  margin: 10px 0;
+  display: block;
+  color: #838383;
+}
+
+.footer_block {
+  display: inline-block;
+  padding: 6px;
+  margin-right: 4px;
+  border-radius: 4px;
+}
+
+.footer_block a {
+  text-decoration: none;
+  color: white;
+}
+
+.footer_block.git {background: #6dd66b; }
+.footer_block.donate { background: #0d3685; }
