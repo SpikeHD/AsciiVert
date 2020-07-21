@@ -1,16 +1,16 @@
 # AsciiVert - Convert images and videos to ASCII art!
 
-This repository aims to provide a very needed, very important service: converting images and videos to ASCII art!
+https://asciivert.art/
 
 ## Goals
 
-* Public website [TODO]
+* Public website [WIP]
 * Public API [Done]
 * CLI version [WIP]
 
 ## Setup
 
-If you want to help, or download and test this yourself, you're going to want to follow these instructions.
+The website poses some retrictions that, if you use the CLI version as an alternative, you can bypass and create larger images and longer videos from.
 
 ### Requirements
 
@@ -18,27 +18,15 @@ If you want to help, or download and test this yourself, you're going to want to
 * ffmpeg ([Win](https://windowsloop.com/install-ffmpeg-windows-10/), [Linux](https://www.ostechnix.com/install-ffmpeg-linux/), [Mac](https://sites.duke.edu/ddmc/2013/12/30/install-ffmpeg-on-a-mac/))
   * I don't own a Mac, so if the instructions are wrong... figure it out yourself I guess
 
-### Setting up the...
+### Setting up the project
 
-#### Base:
-
-To setup the base program, just run `npm install` in the main project directory.
-
-#### API:
-
-1. `node api/api`
-
-#### CLI
-
-1. TODO
-
-#### Frontend
-
-1. TODO
+To setup the base of the project, just run `npm install` in the main project directory.
+To start up the api/website, run `node api/api`.
+To use the CLI version, TODO
 
 ## Using the API
 
-There are currently two endpoints, `/image` and `/video`.
+There are currently four endpoints, `/image`, `/video`, `/mini` and `/file`.
 
 ### /image
 To use the `/image` endpoint, you must send a `form-data` POST request with an image attached in the `files` field, and a resolution to convert to.
