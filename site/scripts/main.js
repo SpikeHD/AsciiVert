@@ -68,7 +68,8 @@ function ajaxSubmitMini(inputId) {
   xhr.open('POST', '/mini', true)
   xhr.onreadystatechange = function () {
     if(xhr.status === 200) {
-      $('.image_mini_result').text(JSON.parse(xhr.responseText).content)
+      $('.image_mini_result').css("display", "block")
+      $('.image_mini_result').find('pre').text(JSON.parse(xhr.responseText).content)
     }
   }
   xhr.send(formData)
@@ -111,12 +112,12 @@ function ajaxSubmitVideo(inputId) {
 
 function invokeVideoChecker(video, source) {
   var interval = setInterval(() => {
-    console.log(video.prop("readyState"))
     if(video.prop("readyState") < 3) {
       video.prop("src", "")
       video.prop("src", source)
     } else {
       video.prop("controls", true)
+      video.css("display", "block")
       clearInterval(interval)
     }
   }, 10000)

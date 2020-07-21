@@ -94,7 +94,17 @@ video {
 }
 
 .image_mini_result {
+  display: none;
+  width: 50%;
   font-size: 9px;
+  text-align: center;
+  margin: 10px auto;
+  border: 1px solid #000;
+  padding: 6px;
+}
+
+.video_ascii_result {
+  display: none;
 }
 
 .footer {
