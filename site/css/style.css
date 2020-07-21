@@ -55,10 +55,8 @@ body {
 }
 
 .box:hover { cursor: pointer; }
-
-.menu__forms input[type="file"] {
-  display: none;
-}
+.menu__forms { margin: 20px 0; }
+.menu__forms input[type="file"] { display: none; }
 
 .file_label {
   display: inline-block;
