@@ -67,6 +67,10 @@
           <span>Resolution: <input type="number" id="image_width"> x <input type="number" id="image_height"></span>
           <span>Framerate: <input type="number" id="framerate"></span>
           <input type="button" value="Submit" onclick="ajaxSubmitVideo('video_file')">
+          <div class="error_block">
+            <span class="error_title"><i class="fas fa-info-circle"></i></span>
+            <p class="error_body"></p>
+          </div>
           <video class="video_ascii_result"></video>
         </div>
         <div class="info">

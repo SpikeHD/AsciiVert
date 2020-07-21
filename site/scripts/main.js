@@ -25,6 +25,7 @@ function ajaxSubmitImage(inputId) {
     width: $(`#${inputId}`).parent().find(`#image_width`).val(),
     height: $(`#${inputId}`).parent().find(`#image_height`).val()
   }
+  var respText
 
   // FormData object
   var formData = new FormData()
@@ -36,7 +37,7 @@ function ajaxSubmitImage(inputId) {
   // Send request
   xhr.open('POST', '/image', true)
   xhr.onreadystatechange = function() {
-    if(xhr.status === 200) {
+    if(xhr.status === 200 && xhr.responseText.length !== 0 && respText != xhr.responseText) {
       let result = $('.image_ascii_result')
       result.prop('src', `/file?id=${xhr.responseText}`)
       result.css('width', '100%')
@@ -58,6 +59,7 @@ function ajaxSubmitMini(inputId) {
     width: $(`#${inputId}`).parent().find(`#image_width`).val(),
     height: $(`#${inputId}`).parent().find(`#image_height`).val()
   }
+  var respText
 
   // FormData object
   var formData = new FormData()
@@ -69,7 +71,7 @@ function ajaxSubmitMini(inputId) {
   // Send request
   xhr.open('POST', '/mini', true)
   xhr.onreadystatechange = function () {
-    if(xhr.status === 200) {
+    if(xhr.status === 200 && xhr.responseText.length !== 0 && respText != xhr.responseText) {
       $('.image_mini_result').css('display', 'block')
       $('.image_mini_result').find('pre').text(JSON.parse(xhr.responseText).content)
     }
@@ -110,6 +112,14 @@ function ajaxSubmitVideo(inputId) {
 
       video.parent().append('<div class="loading"><div></div></div>')
       return invokeVideoChecker(video, source)
+    } else if (xhr.responseText.length !== 0 && xhr.responseText !== respText) {
+      respText = xhr.responseText
+      var json = JSON.parse(xhr.responseText)
+      var errorBlock = $(`#${inputId}`).parent().find('.error_block')
+      
+      errorBlock.find('.error_title').append(json.message)
+      errorBlock.find('.error_body').text(`Try reducing framerate to ${json.reduce_frames_to} fps, or reduce the video length to ${json.reduce_length_to}s`)
+      errorBlock.slideToggle('fast')
     }
   }
   xhr.send(formData)

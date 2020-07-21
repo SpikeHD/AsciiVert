@@ -136,6 +136,22 @@ input[type="number"]::-webkit-inner-spin-button {
   display: none;
 }
 
+.error_block {
+  display: none;
+  width: 50%;
+  margin: 0 auto;
+  background: red;
+  color: #fff;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.error_block .fas { margin: 0 10px; }
+
+.error_title { font-weight: bold;}
+.error_body { font-size: 14px; }
+
 .footer {
   width: 95%;
   margin: 0 auto;
