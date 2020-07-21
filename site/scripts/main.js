@@ -70,7 +70,7 @@ function ajaxSubmitMini(inputId) {
   xhr.open('POST', '/mini', true)
   xhr.onreadystatechange = function () {
     if(xhr.status === 200) {
-      $('.image_mini_result').css("display", "block")
+      $('.image_mini_result').css('display', 'block')
       $('.image_mini_result').find('pre').text(JSON.parse(xhr.responseText).content)
     }
   }
@@ -90,6 +90,7 @@ function ajaxSubmitVideo(inputId) {
     height: $(`#${inputId}`).parent().find(`#image_height`).val()
   }
   var framerate = $(`#${inputId}`).parent().find(`#framerate`).val()
+  var respText
 
   // FormData object
   var formData = new FormData()
@@ -102,21 +103,23 @@ function ajaxSubmitVideo(inputId) {
   // Send request
   xhr.open('POST', '/video', true)
   xhr.onreadystatechange = function () {
-    console.log(xhr.responseText)
-    if(xhr.status === 200) {
+    if(xhr.status === 200 && xhr.responseText.length !== 0 && respText != xhr.responseText) {
+      respText = xhr.responseText
       var video = $('.video_ascii_result')
       var source = `/file?id=${xhr.responseText}`
-      invokeVideoChecker(video, source)
+
+      video.parent().append('<div class="loading"><div></div></div>')
+      return invokeVideoChecker(video, source)
     }
   }
   xhr.send(formData)
 }
 
 function inputWatcher() {
-  var image_inputs = $(".image__ascii").find("input[type='number']")
-  var mini_inputs = $(".image__text").find("input[type='number']")
+  var image_inputs = $('.image__ascii').find('input[type="number"]')
+  var mini_inputs = $('.image__text').find('input[type="number"]')
 
-  image_inputs.change((evt, x) => {
+  image_inputs.change(evt => {
     var elm = $(evt.target)
     if($(elm).val() > 500) {
       $(elm).parent().append('<p class="alert">Warning: both dimensions need to be under 500</p>')
@@ -124,7 +127,7 @@ function inputWatcher() {
     }
   })
 
-  mini_inputs.change((evt, x) => {
+  mini_inputs.change(evt => {
     var elm = $(evt.target)
     if($(elm).val() > 100) {
       $(elm).parent().append('<p class="alert">Warning: both dimensions need to be under 100</p>')
@@ -135,12 +138,13 @@ function inputWatcher() {
 
 function invokeVideoChecker(video, source) {
   var interval = setInterval(() => {
-    if(video.prop("readyState") < 3) {
-      video.prop("src", "")
-      video.prop("src", source)
+    if(video.prop('readyState') < 3) {
+      video.prop('src', '')
+      video.prop('src', source)
     } else {
-      video.prop("controls", true)
-      video.css("display", "block")
+      video.parent().find('.loading').css('display', 'none')
+      video.prop('controls', true)
+      video.css('display', 'block')
       clearInterval(interval)
     }
   }, 10000)

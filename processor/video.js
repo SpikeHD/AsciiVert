@@ -129,6 +129,7 @@ exports.framesToVideo = async (framesPath, outfile, original, framerate) => {
       // H264 will freak the fuck out if the width and height are not even.
       .addOutputOption('-vf pad=ceil(iw/2)*2:ceil(ih/2)*2')
       .output(outfile)
+      // .on('stderr', (ln) => console.log(ln))
       .on('end', () => resolve)
       .on('error', () => reject)
       .run()
