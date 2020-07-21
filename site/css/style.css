@@ -25,10 +25,12 @@ body {
   width: 50%;
   margin: 0 auto;
   text-align: center;
+  font-weight: bolder;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .main__header pre {
-  background: linear-gradient(to right, orange, cyan, blue, violet);
+  background: linear-gradient(to right, red, orange, cyan, blue, violet);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   width: 50%;
@@ -62,8 +64,16 @@ body {
   display: inline-block;
   padding: 10px;
   color: white;
-  background: linear-gradient(to right, #dda0dd, #ff93b7);
+  background: linear-gradient(to right, #ff7373, #dda0dd);
   border-radius: 6px;
+  text-align: center;
+}
+
+.label_inner {
+  text-align: center;
+  padding: 0;
+  margin: auto 0;
+  font-size: 14px;
 }
 
 .menu__forms div span {
