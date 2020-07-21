@@ -12,7 +12,8 @@ exports.fileRoute = (app) => {
     let folder = path.resolve(`./temp/completed/${id}/`)
 
     // Check for file
-    if (!fs.existsSync(folder)) return res.status(404).send('File not found')
+    if (!fs.existsSync(folder) ||
+        fs.readdirSync(folder).length === 0) return res.status(404).send('File not found')
 
     // Send file (there should only ever be one)
     res.sendFile(folder + '/' + fs.readdirSync(folder)[0])
