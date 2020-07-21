@@ -6,6 +6,7 @@ const image = require('./image')
 const video = require('./video')
 const file = require('./getfile')
 const mini = require('./mini')
+const { fileExpiration } = require('../config.json')
 let app = express()
 
 // Setup files in case they do not exist.
@@ -28,3 +29,18 @@ app.listen(8080, () => {
 
 // Default site route
 app.use(express.static(path.resolve('./site/')))
+
+// Every minute, check for expired completed files and delete them
+setInterval(() => {
+  let folders = fs.readdirSync(path.resolve('./temp/completed/'))
+
+  folders.forEach(folder => {
+    let curPath = path.resolve(`./temp/completed/${folder}`)
+    let info = fs.statSync(curPath)
+    let now = Date.now()
+
+    if (info.mtimeMs + fileExpiration < now) {
+      fs.rmdirSync(curPath, { recursive: true })
+    }
+  })
+}, 60000)

@@ -1,3 +1,5 @@
+$(document).ready(() => inputWatcher())
+
 function menuHandle(item) {
   $(`.menu__forms`).children().not(`.${item}`).slideUp('fast')//.css('display', 'none')
   $(`.${item}`).slideToggle('fast')
@@ -130,8 +132,6 @@ function inputWatcher() {
     }
   })
 }
-
-$(document).ready(() => inputWatcher())
 
 function invokeVideoChecker(video, source) {
   var interval = setInterval(() => {
