@@ -118,11 +118,15 @@ exports.framesToVideo = async (framesPath, outfile, original, framerate) => {
   await fs.copyFileSync(original, original.replace(/\.[^.]*$/, '.mp3'))
 
   return new Promise((resolve, reject) => {
-    var f = ffmpeg(framesPath + 'tn_%d.png')
+    ffmpeg(framesPath + 'tn_%d.png')
       .addInputOption(`-framerate ${framerate}`)
       .input(original.replace(/\.[^.]*$/, '.mp3'))
       .addOutputOption('-c:v libx264')
+
+      // Some browsers (FF at least) only support 4:2:0
       .addOutputOption('-pix_fmt yuv420p')
+
+      // H264 will freak the fuck out if the width and height are not even.
       .addOutputOption('-vf pad=ceil(iw/2)*2:ceil(ih/2)*2')
       .output(outfile)
       .on('end', () => resolve)
