@@ -1,5 +1,4 @@
 const ffmpeg = require('fluent-ffmpeg')
-const {Converter} = require('ffmpeg-stream')
 const imageProc = require('./image')
 const util = require('../util/util')
 const fs = require('fs')
@@ -21,8 +20,6 @@ exports.videoToFrames = (path, outdir, framerate) => {
       if(err) reject(err)
 
       duration = metadata.format.duration
-
-      console.log(duration)
 
       ffmpeg(path)
         .on('error', (e) => reject(e))
@@ -61,8 +58,6 @@ exports.convertFrames = async (framesPath, outdir, resolution) => {
   let cur = 0
   let percent = 0
 
-  console.log('Converting frames to text...')
-
   const convertedText = frames.map(async frame => {
     let retVal = await imageProc.imageToText(framesPath + frame, resolution)
 
@@ -81,13 +76,9 @@ exports.convertFrames = async (framesPath, outdir, resolution) => {
 
   await Promise.all(convertedText)
 
-  console.log('Done!')
-
   // Reset progress bar values
   cur = 0
   percent = 0
-
-  console.log('Converting text to images...')
 
   const convertedImages = textArray.map(async text => {
     let currentPercent = Math.round((cur / textArray.length) * 100)
@@ -102,8 +93,6 @@ exports.convertFrames = async (framesPath, outdir, resolution) => {
   })
 
   await Promise.all(convertedImages)
-
-  console.log('Done!')
 }
 
 /**
@@ -128,30 +117,15 @@ exports.framesToVideo = async (framesPath, outfile, original, framerate) => {
   // Make video file into mp3 (should just work without any weird conversion)
   await fs.copyFileSync(original, original.replace(/\.[^.]*$/, '.mp3'))
 
-  // Create new converter instance
-  let conv = new Converter()
-  let input = conv.input({
-    f: 'image2pipe',
-    framerate: framerate
+  return new Promise((resolve, reject) => {
+    ffmpeg(framesPath + 'tn_%d.png')
+      .addInputOption(`-framerate ${framerate}`)
+      .input(original.replace(/\.[^.]*$/, '.mp3'))
+      .output(outfile)
+      .outputFps(framerate)
+      .videoCodec('libx264')
+      .on('end', () => resolve)
+      .on('error', () => reject)
+      .run()
   })
-
-  // Set audio input
-  conv.input(original.replace(/\.[^.]*$/, '.mp3'))
-  conv.output(outfile, {
-    vcodec: 'libx264',
-    pix_fmt: 'yuv420p'
-  })
-
-  frames.map(fname => () => 
-    new Promise((resolve, reject) =>
-      fs.createReadStream(framesPath + fname)
-      .on('end', resolve)
-      .on('error', reject)
-      .pipe(input, {
-        end: false
-      })
-    )
-  ).reduce((prev, next) => prev.then(next), Promise.resolve()).then(() => input.end())
-
-  conv.run()
 }
