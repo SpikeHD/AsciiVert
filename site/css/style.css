@@ -9,6 +9,11 @@ body {
   background: #fff;
 }
 
+video {
+  display: block;
+  margin: 10px auto;
+}
+
 .main__header {
   height: 175px;
   width: 95%;
