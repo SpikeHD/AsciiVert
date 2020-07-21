@@ -54,6 +54,23 @@ body {
 
 .box:hover { cursor: pointer; }
 
+.menu__forms input[type="file"] {
+  display: none;
+}
+
+.file_label {
+  display: inline-block;
+  padding: 10px;
+  color: white;
+  background: linear-gradient(to right, #dda0dd, #ff93b7);
+  border-radius: 6px;
+}
+
+.menu__forms div span {
+  padding: 10px;
+  display: block;
+}
+
 .image__ascii,
 .image__text,
 .video__ascii,

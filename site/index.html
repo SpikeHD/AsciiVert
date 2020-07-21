@@ -41,20 +41,25 @@
         <div class="image__ascii">
           <p>Select a file to convert to an ascii-art image</p>
           <input type="file" id="image_file">
-          <span>Resolution <input type="number" id="image_width"> x <input type="number" id="image_height"></span>
+          <label for="image_file" class="file_label">Select an image file</label>
+          <span>Resolution: <input type="number" id="image_width"> x <input type="number" id="image_height"></span>
           <input type="button" value="Submit" onclick="ajaxSubmitImage('image_file')">
           <a class="image_ascii_result"></a>
         </div>
         <div class="image__text">
           <p>Select a file to convert to raw ascii text</p>
           <input type="file" id="image_mini">
-          <span>Resolution <input type="number" id="image_width"> x <input type="number" id="image_height"></span>
+          <label for="mini_file" class="file_label">Select an image file</label>
+          <span>Resolution: <input type="number" id="image_width"> x <input type="number" id="image_height"></span>
           <input type="button" value="Submit" onclick="ajaxSubmitMini('image_mini')">
           <pre class="image_mini_result"></pre>
         </div>
         <div class="video__ascii">
           <p>Select a video file to convert to an ascii-art video</p>
-          <input type="file">
+          <input type="file" id="video_file">
+          <label for="video_file" class="file_label">Select a video file</label>
+          <span>Resolution: <input type="number" id="image_width"> x <input type="number" id="image_height"></span>
+          <span>Framerate: <input type="number" id="framerate">fps </span>
         </div>
         <div class="info">
           <p>This is some placeholder information</p>
