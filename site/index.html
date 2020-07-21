@@ -61,6 +61,8 @@
           <label for="video_file" class="file_label">Select a video file<br/><p class="label_inner"></p></label>
           <span>Resolution: <input type="number" id="image_width"> x <input type="number" id="image_height"></span>
           <span>Framerate: <input type="number" id="framerate">fps </span>
+          <input type="button" value="Submit" onclick="ajaxSubmitVideo('video_file')">
+          <video class="video_ascii_result"></video>
         </div>
         <div class="info">
           <p>This is some placeholder information</p>

@@ -97,11 +97,27 @@ function ajaxSubmitVideo(inputId) {
   var xhr = new XMLHttpRequest()
 
   // Send request
-  xhr.open('POST', '/mini', true)
+  xhr.open('POST', '/video', true)
   xhr.onreadystatechange = function () {
+    console.log(xhr.responseText)
     if(xhr.status === 200) {
-
+      var video = $('.video_ascii_result')
+      var source = `/file?id=${xhr.responseText}`
+      invokeVideoChecker(video, source)
     }
   }
   xhr.send(formData)
+}
+
+function invokeVideoChecker(video, source) {
+  var interval = setInterval(() => {
+    console.log(video.prop("readyState"))
+    if(video.prop("readyState") < 3) {
+      video.prop("src", "")
+      video.prop("src", source)
+    } else {
+      video.prop("controls", true)
+      clearInterval(interval)
+    }
+  }, 10000)
 }

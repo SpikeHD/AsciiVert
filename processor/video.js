@@ -118,12 +118,13 @@ exports.framesToVideo = async (framesPath, outfile, original, framerate) => {
   await fs.copyFileSync(original, original.replace(/\.[^.]*$/, '.mp3'))
 
   return new Promise((resolve, reject) => {
-    ffmpeg(framesPath + 'tn_%d.png')
+    var f = ffmpeg(framesPath + 'tn_%d.png')
       .addInputOption(`-framerate ${framerate}`)
       .input(original.replace(/\.[^.]*$/, '.mp3'))
+      .addOutputOption('-c:v libx264')
+      .addOutputOption('-pix_fmt yuv420p')
+      .addOutputOption('-vf pad=ceil(iw/2)*2:ceil(ih/2)*2')
       .output(outfile)
-      .outputFps(framerate)
-      .videoCodec('libx264')
       .on('end', () => resolve)
       .on('error', () => reject)
       .run()
