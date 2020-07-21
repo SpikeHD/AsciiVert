@@ -69,7 +69,28 @@ video {
 
 .box:hover { cursor: pointer; }
 .menu__forms { margin: 20px 0; }
+
+.menu__forms input[type="number"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 .menu__forms input[type="file"] { display: none; }
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.menu__forms input[type="number"] {
+  -moz-appearance: textfield;
+  display: inline-block;
+  padding: 4px;
+  color: #000;
+  border: 1px solid #888;
+  border-radius: 6px;
+}
 
 .file_label {
   display: inline-block;
@@ -88,7 +109,7 @@ video {
 }
 
 .menu__forms div span {
-  padding: 10px;
+  padding: 10px 0;
   display: block;
 }
 
@@ -152,6 +173,7 @@ video {
   width: 80px;
   height: 80px;
 }
+
 .loading div {
   position: absolute;
   border: 4px solid #888;
@@ -159,9 +181,11 @@ video {
   border-radius: 50%;
   animation: loading 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
+
 .loading div:nth-child(2) {
   animation-delay: -0.5s;
 }
+
 @keyframes loading {
   0% {
     top: 36px;
