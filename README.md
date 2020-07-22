@@ -30,7 +30,7 @@ To use the CLI version, see below.
 
 * --in - File to be input, required (auto-detects file type)
 * --out - File to be output, required
-* --resolution - Resolution to output file, required
+* --resolution - Resolution to output file, required (NOTE: Resolution is *symbol* resolution, ***not*** image resolution)
 * --framerate - Framerate to export video as, required
 
 ## Other
@@ -45,18 +45,18 @@ Examples of potential commands:
 
 `node ascii --api`
 
-## Using the API
+# Using the API
 
 There are currently four endpoints, `/image`, `/video`, `/mini` and `/file`.
 
-### /image
+## /image
 To use the `/image` endpoint, you must send a `form-data` POST request with an image attached in the `files` field, and a resolution to convert to.
 
 Example:
 
 ![postman](https://i.paste.pics/5a00b4edf2b8f6ff3020ec21da21bdb5.png?trs=7c74ea5877599d9b712bc0a138239b8f75236e1ccae520c4cb95ae3fa4bf98ff)
 
-### /video
+## /video
 
 To use the `/video` endpoint, you must send a `form-data` POST request with a video file in the `files` field, a resolution, and a framerate.
 
@@ -64,7 +64,7 @@ Example:
 
 ![postman](https://user-images.githubusercontent.com/25207995/87893157-dec66000-c9f3-11ea-8780-76aac017c9b1.png)
 
-### /mini
+## /mini
 
 Using the `/mini` endpoint is similar to the `/image` endpoint in that you only need to supply an image and resolution, but the resolution limit is smaller and it returns raw text instead.
 
@@ -72,7 +72,7 @@ Example:
 
 ![postman](https://user-images.githubusercontent.com/25207995/87893303-5d230200-c9f4-11ea-9dc0-1c7d9d8b24c9.png)
 
-### /file
+## /file
 
 When using the `/image` or `/video` endpoints, the request will immediately return a file ID. While the file may not be ready immediately, when it is, you can GET the `/file` endpoint with a `id` URI parameter (eg. `/file?id=1234`).
 
