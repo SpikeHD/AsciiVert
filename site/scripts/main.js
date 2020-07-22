@@ -175,6 +175,7 @@ function invokeVideoChecker(video, source) {
       video.prop('src', source)
     } else {
       video.parent().find('.loading').css('display', 'none')
+      video.parent().find('.loading_text').css('display', 'none')
       video.prop('controls', true)
       video.css('display', 'block')
       clearInterval(interval)
