@@ -167,6 +167,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .info_title {
   font-size: 8px;
+  margin: auto;
 }
 
 .info_title pre {
