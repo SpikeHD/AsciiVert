@@ -12,17 +12,38 @@ https://asciivert.art/
 
 The website poses some retrictions that, if you use the CLI version as an alternative, you can bypass and create larger images and longer videos from.
 
-### Requirements
+## Requirements
 
 * [Node.JS](https://nodejs.org/en/) (v12 should be fine)
 * ffmpeg ([Win](https://windowsloop.com/install-ffmpeg-windows-10/), [Linux](https://www.ostechnix.com/install-ffmpeg-linux/), [Mac](https://sites.duke.edu/ddmc/2013/12/30/install-ffmpeg-on-a-mac/))
   * I don't own a Mac, so if the instructions are wrong... figure it out yourself I guess
 
-### Setting up the project
+## Setting up the project
 
 To setup the base of the project, just run `npm install` in the main project directory.
 To start up the api/website, run `node api/api`.
-To use the CLI version, TODO
+To use the CLI version, see below.
+
+# Using the CLI tool
+
+## Flags (all have 1-letter aliases)
+
+* --in - File to be input, required (auto-detects file type)
+* --out - File to be output, required
+* --resolution - Resolution to output file, required
+* --framerate - Framerate to export video as, required
+
+## Other
+
+* --api - No argument, starts the site/API service
+
+Examples of potential commands:
+
+`node index --in [path]/image.jpg --out [path]/converted.jpg --resolution 1920x1080`
+
+`node index -i [path]/video.mp4 -o [path]/converted.mp4 -r 800x600 --framerate 15`
+
+`node index --api`
 
 ## Using the API
 
