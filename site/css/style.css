@@ -145,6 +145,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .video_ascii_result {
   display: none;
+  width: 90%;
 }
 
 .error_block {
