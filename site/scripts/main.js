@@ -1,8 +1,14 @@
-$(document).ready(() => inputWatcher())
+$(document).ready(() => {
+  inputWatcher()
+
+  menuHandle(document.cookie.split('last_menu=')[1].split(';')[0])
+})
 
 function menuHandle(item) {
   $(`.menu__forms`).children().not(`.${item}`).slideUp('fast')//.css('display', 'none')
   $(`.${item}`).slideToggle('fast')
+
+  document.cookie = "last_menu=" + item
 }
 
 function displayFilename(e) {
@@ -116,6 +122,7 @@ function ajaxSubmitVideo(inputId) {
       var source = `/file?id=${xhr.responseText}`
 
       video.parent().append('<div class="loading"><div></div></div>')
+      video.parent().append('<p class="loading_text">Processing | This can take a while</p>')
       $(`#${inputId}`).parent().find('.error_block').css('display', 'none')
       return invokeVideoChecker(video, source)
     } else if (xhr.responseText.length !== 0 && xhr.responseText !== respText) {

@@ -46,7 +46,7 @@ video {
   background: linear-gradient(to right, red, orange, cyan, blue, violet);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  width: 50%;
+  width: 500px;
   display: block;
   font-weight: bold;
   text-align: center;
@@ -105,8 +105,9 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .file_label {
   display: inline-block;
+  width: 200px;
   padding: 10px;
-  color: white;
+  color: #fff;
   background: linear-gradient(to right, #ff7373, #dda0dd);
   border-radius: 6px;
   text-align: center;
@@ -164,6 +165,21 @@ input[type="number"]::-webkit-inner-spin-button {
 .error_title { font-weight: bold;}
 .error_body { font-size: 14px; }
 
+.info_title {
+  font-size: 8px;
+}
+
+.info_title pre {
+  background: linear-gradient(to right, red, orange, cyan, blue, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: 100%;
+  display: block;
+  font-weight: 900;
+  text-align: center;
+  margin: 0 auto;
+}
+
 .footer {
   width: 95%;
   margin: 0 auto;
@@ -187,11 +203,18 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .footer_block a {
   text-decoration: none;
-  color: white;
+  color: #fff;
 }
 
 .footer_block.git {background: #6dd66b; }
 .footer_block.donate { background: #0d3685; }
+
+.loading_text {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  color: #888;
+}
 
 /* Loading icon from https://loading.io/css/ */
 .loading {

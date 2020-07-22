@@ -31,10 +31,10 @@
         <div class="box" onclick="menuHandle('image__ascii')">
           Convert an image to an ascii image
         </div>
-        <div class="box" style="border-right: 1px solid #000; border-left: 1px solid #000;" onclick="menuHandle('image__text')">
+        <div class="box" style="border-right: 2px solid #000; border-left: 2px solid #000;" onclick="menuHandle('image__text')">
           Convert an image to raw text
         </div>
-        <div class="box" style="border-right: 1px solid #000;"" onclick="menuHandle('video__ascii')">
+        <div class="box" style="border-right: 2px solid #000;"" onclick="menuHandle('video__ascii')">
           Convert a video to an ascii video
         </div>
         <div class="box" onclick="menuHandle('info')">
@@ -78,7 +78,61 @@
           <video class="video_ascii_result"></video>
         </div>
         <div class="info">
-          <p>This is some placeholder information</p>
+          <span class="info_title">
+            <pre>
+    _____ ___.                  __    ___________.__    .__         __________                   __               __   
+   /  _  \\_ |__   ____  __ ___/  |_  \__    ___/|  |__ |__| ______ \______   \_______  ____    |__| ____   _____/  |_ 
+  /  /_\  \| __ \ /  _ \|  |  \   __\   |    |   |  |  \|  |/  ___/  |     ___/\_  __ \/  _ \   |  |/ __ \_/ ___\   __\
+ /    |    \ \_\ (  <_> )  |  /|  |     |    |   |   Y  \  |\___ \   |    |     |  | \(  <_> )  |  \  ___/\  \___|  |  
+ \____|__  /___  /\____/|____/ |__|     |____|   |___|  /__/____  >  |____|     |__|   \____/\__|  |\___  >\___  >__|  
+         \/    \/                                     \/        \/                          \______|    \/     \/       
+            </pre>
+          </span>
+          <p>
+            AsciiVert was originally created as something to work on over weekends. It ended up being something I've worked on
+            pretty regularily in my free time.
+            <br><br>
+            If you're interested in technical details, this whole site runs on through Nginx on a cheap $5 DigitalOcean droplet.
+            The processor AND webserver are run using NodeJS. The routes are handled with Express and the processor itself uses
+            an orchestra made up of Canvas, Jimp, and FFMPEG. There is no doubt that it could be better by using a lower level
+            language and optimizing it profusely, but it is what it is.
+            <br><br>
+            I guess one warning I have, if you're visiting and planning on trying it, is that because of the small, limited server
+            it runs on, it frequently runs out of memory and stops processing your video/image. The best way to minimize the chance
+            of this happening is just making sure your resolution and framerate are low.
+          </p>
+          <span class="info_title">
+            <pre>
+  ____ ___      .__                   __  .__                _____ __________.___ 
+ |    |   \_____|__| ____    ____   _/  |_|  |__   ____     /  _  \\______   \   |
+ |    |   /  ___/  |/    \  / ___\  \   __\  |  \_/ __ \   /  /_\  \|     ___/   |
+ |    |  /\___ \|  |   |  \/ /_/  >  |  | |   Y  \  ___/  /    |    \    |   |   |
+ |______//____  >__|___|  /\___  /   |__| |___|  /\___  > \____|__  /____|   |___|
+              \/        \//_____/              \/     \/          \/              
+            </pre>
+          </span>
+          <p>
+            There is a fully usable public API for this project. It works just as good as the site (which means it can crash sometimes)
+            but for images, it's almost instant and works 95% of the time.
+            
+            The GitHub button at the bottom will have better instructions on how to use it.
+          </p>
+          <span class="info_title">
+            <pre>
+   ________        __    __  .__                 __________                  __    __________                 __         .__        __  .__                      
+  /  _____/  _____/  |__/  |_|__| ____    ____   \______   \_____    _______/  |_  \______   \ ____   _______/  |________|__| _____/  |_|__| ____   ____   ______
+ /   \  ____/ __ \   __\   __\  |/    \  / ___\   |     ___/\__  \  /  ___/\   __\  |       _// __ \ /  ___/\   __\_  __ \  |/ ___\   __\  |/  _ \ /    \ /  ___/
+ \    \_\  \  ___/|  |  |  | |  |   |  \/ /_/  >  |    |     / __ \_\___ \  |  |    |    |   \  ___/ \___ \  |  |  |  | \/  \  \___|  | |  (  <_> )   |  \\___ \ 
+  \______  /\___  >__|  |__| |__|___|  /\___  /   |____|    (____  /____  > |__|    |____|_  /\___  >____  > |__|  |__|  |__|\___  >__| |__|\____/|___|  /____  >
+         \/     \/                   \//_____/                   \/     \/                 \/     \/     \/                      \/                    \/     \/  
+            </pre>
+          </span>
+          <p>
+            You don't. Well, that's not actually true. There is no way to change the restrictions on the site since they are handled
+            server-side. You CAN, however, look at the GitHub page and use the CLI version instead, which will not have any restrictions.
+            This website is meant to be an easy way to experiment with the tool, and if you really need too ascii-fy something for some
+            reason, you should definitely use the CLI version instead.
+          </p>
         </div>
       </div>
     </div>
