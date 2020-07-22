@@ -3,7 +3,7 @@ const path = require('path')
 const ffmpeg = require('fluent-ffmpeg')
 const { createUniqueID } = require('../util/util')
 const video = require('../processor/video')
-const { frame_limit, resolution_limit } = require('../config.json')
+const { frame_limit, mini_resolution_limit } = require('../config.json')
 const mimes = [
   'video/mp4'
 ]
@@ -23,7 +23,7 @@ exports.videoRoute = (app) => {
     let resolution = req.body && req.body.resolution ? JSON.parse(req.body.resolution):null
     let framerate = req.body && req.body.framerate ? JSON.parse(req.body.framerate):10
     let trim = req.body && req.body.trim ? JSON.parse(req.body.trim):null
-    let valid_res = resolution && (resolution.width <= resolution_limit.width && resolution.height <=  resolution_limit.height)
+    let valid_res = resolution && (resolution.width <= mini_resolution_limit.width && resolution.height <=  mini_resolution_limit.height)
 
     if(!file) return res.status(400).send('Looks like you forgot a file!')
     if(!mimes.includes(file.mimetype)) return res.status(400).send('Looks like that isn\'t a valid file format!')
