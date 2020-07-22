@@ -31,9 +31,6 @@ for (let i = 0; i < opts.length; i++) {
 // First, simply check if we just want to activate the API
 if (avblArgs.api) return api.start()
 
-(async () => {
-
-})()
 // If no framerate provided, assume image conversion
 if (!avblArgs.framerate) {
   doImage()
