@@ -46,7 +46,7 @@ video {
   background: linear-gradient(to right, red, orange, cyan, blue, violet);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  width: 50%;
+  width: 500px;
   display: block;
   font-weight: bold;
   text-align: center;
