@@ -64,8 +64,12 @@
           <p>Select a video file to convert to an ascii-art video</p>
           <input type="file" id="video_file" onchange="displayFilename(event)">
           <label for="video_file" class="file_label">Select a video file<br/><p class="label_inner"></p></label>
-          <span>Resolution: <input type="number" id="image_width"> x <input type="number" id="image_height"></span>
-          <span>Framerate: <input type="number" id="framerate"></span>
+          <span>Resolution: <input step="1" type="number" id="image_width"> x <input type="number" id="image_height"></span>
+          <span>Framerate: <input step="1" type="number" id="framerate"></span>
+          <span>
+            Trim Start (seconds): <input type="number" id="trim_start">
+            Trim End (seconds): <input type="number" id="trim_end">
+          </span>
           <input type="button" value="Submit" onclick="ajaxSubmitVideo('video_file')">
           <div class="error_block">
             <span class="error_title"><i class="fas fa-info-circle"></i></span>

@@ -70,10 +70,18 @@ video {
 .box:hover { cursor: pointer; }
 .menu__forms { margin: 20px 0; }
 
+.menu__forms input[type="time"],
 .menu__forms input[type="number"] {
   -webkit-appearance: none;
-  -moz-appearance: none;
+  -moz-appearance: textfield;
   appearance: none;
+  display: inline-block;
+  padding: 4px;
+  color: #000;
+  border: 1px solid #888;
+  border-radius: 6px;
+  width: 30px;
+  text-align: center;
 }
 .menu__forms input[type="file"] { display: none; }
 
@@ -83,6 +91,7 @@ input[type="number"]::-webkit-inner-spin-button {
   appearance: none;
 }
 
+.menu__forms input[type="time"],
 .menu__forms input[type="number"] {
   -moz-appearance: textfield;
   display: inline-block;
@@ -90,6 +99,8 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #000;
   border: 1px solid #888;
   border-radius: 6px;
+  width: 30px;
+  text-align: center;
 }
 
 .file_label {

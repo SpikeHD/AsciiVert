@@ -105,7 +105,7 @@ exports.convertFrames = async (framesPath, outdir, resolution) => {
  * @param {String} original 
  *  Path to original file (for audio extraction).
  */
-exports.framesToVideo = async (framesPath, outfile, original, framerate) => {
+exports.framesToVideo = async (framesPath, outfile, original, framerate, trim = null) => {
   let frames = fs.readdirSync(framesPath)
   frames.sort((a, b) => {
     let aNum = Number(a.replace(/[^0-9]/g, ''))
@@ -118,7 +118,7 @@ exports.framesToVideo = async (framesPath, outfile, original, framerate) => {
   await fs.copyFileSync(original, original.replace(/\.[^.]*$/, '.mp3'))
 
   return new Promise((resolve, reject) => {
-    ffmpeg(framesPath + 'tn_%d.png')
+    let f = ffmpeg(framesPath + 'tn_%d.png')
       .addInputOption(`-framerate ${framerate}`)
       .input(original.replace(/\.[^.]*$/, '.mp3'))
       .addOutputOption('-c:v libx264')
@@ -132,6 +132,15 @@ exports.framesToVideo = async (framesPath, outfile, original, framerate) => {
       // .on('stderr', (ln) => console.log(ln))
       .on('end', () => resolve)
       .on('error', () => reject)
-      .run()
+
+    if (trim) {
+      f.setStartTime(`00:00:${trim.start}`)
+
+      if (trim.end > trim.start) {
+        f.addOutputOption(`-t 00:00:${trim.end}`)
+      }
+    }
+
+    f.run()
   })
 }

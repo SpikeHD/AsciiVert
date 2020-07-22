@@ -22,6 +22,7 @@ exports.videoRoute = (app) => {
     let dir = path.resolve(`./temp/videos/${id}/`)
     let resolution = req.body && req.body.resolution ? JSON.parse(req.body.resolution):null
     let framerate = req.body && req.body.framerate ? JSON.parse(req.body.framerate):10
+    let trim = req.body && req.body.trim ? JSON.parse(req.body.trim):null
 
     if(!file) return res.status(400).send('Looks like you forgot a file!')
     if(!mimes.includes(file.mimetype)) return res.status(400).send('Looks like that isn\'t a valid file format!')
@@ -47,11 +48,14 @@ exports.videoRoute = (app) => {
         let frameReduction = Math.round(frame_limit / length)
         let lengthReduction = frame_limit / framerate
 
-        return res.status(400).send({
-          message: 'Frame limit reached, consider reducing framerate or video length',
-          reduce_frames_to: frameReduction,
-          reduce_length_to: lengthReduction
-        })
+        // If the trim actually complies with the length reduction, we can move on
+        if (trim && trim.end - trim.start > lengthReduction) {
+          return res.status(400).send({
+            message: 'Frame limit reached, consider reducing framerate or video length',
+            reduce_frames_to: frameReduction,
+            reduce_length_to: lengthReduction
+          })
+        }
       }
 
       if (res.headersSent) return
@@ -69,7 +73,7 @@ exports.videoRoute = (app) => {
       await fs.mkdirSync(`./temp/completed/${id}`)
   
       // Stitch frames back into video
-      await video.framesToVideo(`${dir}/converted_frames/`, `./temp/completed/${id}/${file.name.replace('.mp4', 'converted.mp4')}`, `${dir}/${file.name}`, framerate)
+      await video.framesToVideo(`${dir}/converted_frames/`, `./temp/completed/${id}/${file.name.replace('.mp4', 'converted.mp4')}`, `${dir}/${file.name}`, framerate, trim)
   
       // Cleanup
       await fs.rmdirSync(dir, {recursive: true})

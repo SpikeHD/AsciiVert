@@ -92,6 +92,10 @@ function ajaxSubmitVideo(inputId) {
     height: $(`#${inputId}`).parent().find(`#image_height`).val()
   }
   var framerate = $(`#${inputId}`).parent().find(`#framerate`).val()
+  var trim = {
+    start: $(`#${inputId}`).parent().find(`#trim_start`).val() || 0,
+    end: $(`#${inputId}`).parent().find(`#trim_end`).val()
+  }
   var respText
 
   // FormData object
@@ -99,6 +103,7 @@ function ajaxSubmitVideo(inputId) {
   formData.append('files', file, file.name)
   formData.append('resolution', JSON.stringify(resolution))
   formData.append('framerate', framerate)
+  formData.append('trim', JSON.stringify(trim))
 
   var xhr = new XMLHttpRequest()
 
