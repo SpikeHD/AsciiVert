@@ -4,9 +4,9 @@ https://asciivert.art/
 
 ## Goals
 
-* Public website [WIP]
+* Public website [Kinda WIP]
 * Public API [Done]
-* CLI version [WIP]
+* CLI version [Done]
 
 ## Setup
 
