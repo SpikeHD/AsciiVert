@@ -39,11 +39,11 @@ To use the CLI version, see below.
 
 Examples of potential commands:
 
-`node index --in [path]/image.jpg --out [path]/converted.jpg --resolution 1920x1080`
+`node ascii --in [path]/image.jpg --out [path]/converted.jpg --resolution 1920x1080`
 
-`node index -i [path]/video.mp4 -o [path]/converted.mp4 -r 800x600 --framerate 15`
+`node ascii -i [path]/video.mp4 -o [path]/converted.mp4 -r 800x600 --framerate 15`
 
-`node index --api`
+`node ascii --api`
 
 ## Using the API
 
