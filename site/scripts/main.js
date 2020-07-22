@@ -122,6 +122,7 @@ function ajaxSubmitVideo(inputId) {
       var source = `/file?id=${xhr.responseText}`
 
       video.parent().append('<div class="loading"><div></div></div>')
+      video.parent().append('<p class="loading_text">Processing | This can take a while</p>')
       $(`#${inputId}`).parent().find('.error_block').css('display', 'none')
       return invokeVideoChecker(video, source)
     } else if (xhr.responseText.length !== 0 && xhr.responseText !== respText) {
