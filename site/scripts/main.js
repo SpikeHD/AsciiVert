@@ -1,8 +1,14 @@
-$(document).ready(() => inputWatcher())
+$(document).ready(() => {
+  inputWatcher()
+
+  menuHandle(document.cookie.split('last_menu=')[1].split(';')[0])
+})
 
 function menuHandle(item) {
   $(`.menu__forms`).children().not(`.${item}`).slideUp('fast')//.css('display', 'none')
   $(`.${item}`).slideToggle('fast')
+
+  document.cookie = "last_menu=" + item
 }
 
 function displayFilename(e) {
