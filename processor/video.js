@@ -50,9 +50,8 @@ exports.videoToFrames = (path, outdir, framerate) => {
  * @param {String} outdir 
  *  Path where frames will be exported.
  */
-exports.convertFrames = async (framesPath, outdir, resolution) => {
+exports.convertFrames = async (framesPath, outdir, resolution, progress = false) => {
   const frames = fs.readdirSync(framesPath)
-  let textArray = []
 
   // Progress bar values
   let cur = 0
@@ -61,38 +60,21 @@ exports.convertFrames = async (framesPath, outdir, resolution) => {
   const convertedText = frames.map(async frame => {
     let retVal = await imageProc.imageToText(framesPath + frame, resolution)
 
-    let currentPercent = Math.round((cur / frames.length) * 100)
-    cur++
-    if (percent != currentPercent) {
-      percent = currentPercent
-      util.updateProgress(percent, `${cur}/${frames.length} (${frame})`)
+    if (progress) {
+      let currentPercent = Math.round((cur / frames.length) * 100)
+      cur++
+      if (percent != currentPercent) {
+        percent = currentPercent
+        util.updateProgress(percent, `${cur}/${frames.length} (${frame})`)
+      }
     }
 
-    return textArray.push({
-      obj: retVal,
-      filename: frame
-    })
-  })
-
-  await Promise.all(convertedText)
-
-  // Reset progress bar values
-  cur = 0
-  percent = 0
-
-  const convertedImages = textArray.map(async text => {
-    let currentPercent = Math.round((cur / textArray.length) * 100)
-    cur++
-    if (percent != currentPercent) {
-      percent = currentPercent
-      util.updateProgress(percent, `${cur}/${textArray.length} (${text.filename})`)
-    }
-    
-    let written = await imageProc.textToImage(outdir + text.filename, text.obj)
+    // Write converted frame
+    let written = await imageProc.textToImage(outdir + frame, retVal)
     return written
   })
 
-  await Promise.all(convertedImages)
+  await Promise.all(convertedText)
 }
 
 /**

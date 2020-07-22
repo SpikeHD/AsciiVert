@@ -18,29 +18,34 @@ if(!fs.existsSync(path.resolve(`./temp/completed/`))) fs.mkdirSync(path.resolve(
 // Allow for getting files.
 app.use(fu())
 
-// Start server.
-app.listen(8080, () => {
-  image.imageRoute(app)
-  video.videoRoute(app)
-  file.fileRoute(app)
-  mini.miniRoute(app)
-  console.log('API Server is up')
-})
-
-// Default site route
-app.use(express.static(path.resolve('./site/')))
-
-// Every minute, check for expired completed files and delete them
-setInterval(() => {
-  let folders = fs.readdirSync(path.resolve('./temp/completed/'))
-
-  folders.forEach(folder => {
-    let curPath = path.resolve(`./temp/completed/${folder}`)
-    let info = fs.statSync(curPath)
-    let now = Date.now()
-
-    if (info.mtimeMs + fileExpiration < now) {
-      fs.rmdirSync(curPath, { recursive: true })
-    }
+/**
+ * Start the API server.
+ */
+exports.start = () => {
+  // Start server.
+  app.listen(8080, () => {
+    image.imageRoute(app)
+    video.videoRoute(app)
+    file.fileRoute(app)
+    mini.miniRoute(app)
+    console.log('API Server is up')
   })
-}, 60000)
+  
+  // Default site route.
+  app.use(express.static(path.resolve('./site/')))
+  
+  // Every minute, check for expired completed files and delete them.
+  setInterval(() => {
+    let folders = fs.readdirSync(path.resolve('./temp/completed/'))
+  
+    folders.forEach(folder => {
+      let curPath = path.resolve(`./temp/completed/${folder}`)
+      let info = fs.statSync(curPath)
+      let now = Date.now()
+  
+      if (info.mtimeMs + fileExpiration < now) {
+        fs.rmdirSync(curPath, { recursive: true })
+      }
+    })
+  }, 60000)
+}
