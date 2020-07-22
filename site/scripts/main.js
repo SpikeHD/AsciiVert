@@ -155,7 +155,7 @@ function inputWatcher() {
   video_inputs.change(evt => {
     var elm = $(evt.target)
     if($(elm).val() > 100) {
-      $(elm).parent().append('<p class="alert">Warning: both dimensions need to be under 500</p>')
+      $(elm).parent().append('<p class="alert">Warning: both dimensions need to be under 100</p>')
       $(elm).parents().find('.alert').slideToggle('fast')
     }
   })
