@@ -108,9 +108,16 @@ input[type="number"]::-webkit-inner-spin-button {
   width: 200px;
   padding: 10px;
   color: #fff;
-  background: linear-gradient(to right, #ff7373, #dda0dd);
+  background-color: #ff7373;
   border-radius: 6px;
   text-align: center;
+  transition: 0.2s;
+}
+
+.file_label:hover {
+  background-position: 100px;
+  background: #ff6669;
+  cursor: pointer;
 }
 
 .label_inner {
