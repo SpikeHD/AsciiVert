@@ -127,12 +127,19 @@ function ajaxSubmitVideo(inputId) {
       return invokeVideoChecker(video, source)
     } else if (xhr.responseText.length !== 0 && xhr.responseText !== respText) {
       respText = xhr.responseText
-      var json = JSON.parse(xhr.responseText)
       var errorBlock = $(`#${inputId}`).parent().find('.error_block')
-      
-      errorBlock.find('.error_title').append(json.message)
-      errorBlock.find('.error_body').text(`Try reducing framerate to ${json.reduce_frames_to} fps, or reduce the video length to ${json.reduce_length_to}s`)
-      errorBlock.slideToggle('fast')
+
+      try {
+        var json = JSON.parse(xhr.responseText)
+        
+        errorBlock.find('.error_title').append(json.message)
+        errorBlock.find('.error_body').text(`Try reducing framerate to ${json.reduce_frames_to} fps, or reduce the video length to ${json.reduce_length_to}s`)
+        errorBlock.slideToggle('fast')
+      } catch(e) {
+        errorBlock.find('.error_title').append('Error')
+        errorBlock.find('.error_body').text(respText)
+        errorBlock.slideToggle('fast')
+      }
     }
   }
   xhr.send(formData)
