@@ -74,7 +74,7 @@ exports.textToImage = (outfile, textObj) => {
 
     // Create canvas assuming we are supplied with an
     // object that contains the width, height, and text
-    let canvas = createCanvas(textObj.width * 14.1, textObj.height * 15)
+    let canvas = createCanvas(textObj.width * 16, textObj.height * 15)
     let ctx = canvas.getContext('2d')
   
     // Fill with white
@@ -83,7 +83,7 @@ exports.textToImage = (outfile, textObj) => {
   
     // Write text to image using monospaced font for equal spacing
     ctx.fillStyle = 'black'
-    ctx.font = '10pt Consolas'
+    ctx.font = '10pt Courier'
     ctx.fillText(textObj.content, 0, 0)
   
     resolve(writebuf(outfile, canvas.toDataURL('image/png')))
