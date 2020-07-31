@@ -83,7 +83,7 @@ exports.textToImage = (outfile, textObj) => {
   
     // Write text to image using monospaced font for equal spacing
     ctx.fillStyle = 'black'
-    ctx.font = '10pt Courier'
+    ctx.font = 'bold 10pt Courier'
     ctx.fillText(textObj.content, 0, 0)
   
     resolve(writebuf(outfile, canvas.toDataURL('image/png')))
