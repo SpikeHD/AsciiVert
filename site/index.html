@@ -47,7 +47,7 @@
           <input type="file" id="image_file" onchange="displayFilename(event)">
           <label for="image_file" class="file_label">Select an image file<br/><p class="label_inner"></p></label>
           <span>Resolution: <input type="number" id="image_width"> x <input type="number" id="image_height"></span>
-          <input type="button" value="Submit" onclick="ajaxSubmitImage('image_file')">
+          <input type="button" value="Submit and Convert" onclick="ajaxSubmitImage('image_file')">
           <img class="image_ascii_result"></img>
         </div>
         <div class="image__text">
@@ -55,7 +55,7 @@
           <input type="file" id="image_mini" onchange="displayFilename(event)">
           <label for="image_mini" class="file_label">Select an image file<br/><p class="label_inner"></p></label>
           <span>Resolution: <input type="number" id="image_width"> x <input type="number" id="image_height"></span>
-          <input type="button" value="Submit" onclick="ajaxSubmitMini('image_mini')">
+          <input type="button" value="Submit and Convert" onclick="ajaxSubmitMini('image_mini')">
           <div class="image_mini_result">
             <pre></pre>
           </div>
@@ -70,7 +70,7 @@
             Trim Start (seconds): <input type="number" id="trim_start">
             Trim End (seconds): <input type="number" id="trim_end">
           </span>
-          <input type="button" value="Submit" onclick="ajaxSubmitVideo('video_file')">
+          <input type="button" value="Submit and Convert" onclick="ajaxSubmitVideo('video_file')">
           <div class="error_block">
             <span class="error_title"><i class="fas fa-info-circle"></i></span>
             <p class="error_body"></p>

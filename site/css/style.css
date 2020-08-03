@@ -70,8 +70,7 @@ video {
 .box:hover { cursor: pointer; }
 .menu__forms { margin: 20px 0; }
 
-.menu__forms input[type="time"],
-.menu__forms input[type="number"] {
+input {
   -webkit-appearance: none;
   -moz-appearance: textfield;
   appearance: none;
@@ -101,6 +100,18 @@ input[type="number"]::-webkit-inner-spin-button {
   border-radius: 6px;
   width: 30px;
   text-align: center;
+}
+
+input[type="button"] {
+  margin-top: 20px;
+  width: 220px;
+  height: 40px;
+  transition: 0.2s;
+}
+
+input[type="button"]:hover {
+  cursor: pointer;
+  background: lightgrey;
 }
 
 .file_label {
