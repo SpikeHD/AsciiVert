@@ -28,14 +28,14 @@ To use the CLI version, see below.
 
 ## Flags (all have 1-letter aliases)
 
-* `--in` - File to be input, required (auto-detects file type)
+* `--in` - File to be input, required (file will be treated as an image if no framerate is provided)
 * `--out` - File to be output, required
 * `--resolution` - Resolution to output file, required (NOTE: Resolution is *symbol* resolution, ***not*** image resolution)
 * `--framerate` - Framerate to export video as, required
 
 ## Other
 
-* --api - No argument, starts the site/API service
+* `--api` - No argument, starts the site/API service
 
 Examples of potential commands:
 
