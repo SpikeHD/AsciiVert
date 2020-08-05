@@ -21,7 +21,7 @@ The website poses some retrictions that, if you use the CLI version as an altern
 ## Setting up the project
 
 To setup the base of the project, just run `npm install` in the main project directory.
-To start up the api/website, run `node api/api`.
+To start up the api/website, run `node ascii --api`.
 To use the CLI version, see below.
 
 # Using the CLI tool
