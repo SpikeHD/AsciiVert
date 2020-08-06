@@ -63,11 +63,28 @@ video {
 .box {
   padding: 20px;
   width: 15%;
+  height: 45px;
+  margin: auto 0;
   text-align: center;
   user-select: none;
+  position: relative;
+}
+
+.box:after {
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #000;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
 }
 
 .box:hover { cursor: pointer; }
+.box:hover::after { width: 100%; left: 0; }
+.box__active::after { width: 100%; left: 0; }
 .menu__forms { margin: 20px 0; }
 
 input {

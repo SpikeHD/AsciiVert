@@ -4,9 +4,14 @@ $(document).ready(() => {
   menuHandle(document.cookie.split('last_menu=')[1].split(';')[0])
 })
 
-function menuHandle(item) {
+function menuHandle(elm, item) {
   $(`.menu__forms`).children().not(`.${item}`).slideUp('fast')//.css('display', 'none')
   $(`.${item}`).slideToggle('fast')
+
+  // Remove all active classes from every menu element
+  $(elm).parent().children().each((i, p) => $(p).removeClass('box__active'))
+  // Add active class to current element
+  $(elm).addClass('box__active')
 
   document.cookie = "last_menu=" + item
 }
