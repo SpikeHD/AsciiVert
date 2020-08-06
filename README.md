@@ -21,21 +21,21 @@ The website poses some retrictions that, if you use the CLI version as an altern
 ## Setting up the project
 
 To setup the base of the project, just run `npm install` in the main project directory.
-To start up the api/website, run `node api/api`.
+To start up the api/website, run `node ascii --api`.
 To use the CLI version, see below.
 
 # Using the CLI tool
 
 ## Flags (all have 1-letter aliases)
 
-* `--in` - File to be input, required (auto-detects file type)
+* `--in` - File to be input, required (file will be treated as an image if no framerate is provided)
 * `--out` - File to be output, required
 * `--resolution` - Resolution to output file, required (NOTE: Resolution is *symbol* resolution, ***not*** image resolution)
 * `--framerate` - Framerate to export video as, required
 
 ## Other
 
-* --api - No argument, starts the site/API service
+* `--api` - No argument, starts the site/API service
 
 Examples of potential commands:
 
