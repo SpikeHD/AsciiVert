@@ -1,5 +1,6 @@
 const express = require('express')
 const fu = require('express-fileupload')
+const rl = require('express-rate-limit')
 const fs = require('fs')
 const path = require('path')
 const image = require('./image')
@@ -7,6 +8,10 @@ const video = require('./video')
 const file = require('./getfile')
 const mini = require('./mini')
 const { fileExpiration } = require('../config.json')
+const lim = rl({
+  windowMs: 10 * 1000, // 10 seconds
+  max: 10
+})
 let app = express()
 
 // Setup files in case they do not exist.
@@ -24,10 +29,10 @@ app.use(fu())
 exports.start = () => {
   // Start server.
   app.listen(8080, () => {
-    image.imageRoute(app)
-    video.videoRoute(app)
+    image.imageRoute(app, lim)
+    video.videoRoute(app, lim)
     file.fileRoute(app)
-    mini.miniRoute(app)
+    mini.miniRoute(app, lim)
     console.log('API Server is up')
   })
   

@@ -13,8 +13,8 @@ const mimes = [
  * 
  * @param {Express} app 
  */
-exports.miniRoute = (app) => {
-  app.post('/mini', async (req, res) => {
+exports.miniRoute = (app, rateLimiter) => {
+  app.post('/mini', rateLimiter, async (req, res) => {
     if(!req.files) return res.status(400).send('Looks like you forgot a file!')
     
     let file = req.files.files

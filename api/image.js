@@ -13,8 +13,8 @@ const mimes = [
  * 
  * @param {Express} app 
  */
-exports.imageRoute = (app) => {
-  app.post('/image', async (req, res) => {
+exports.imageRoute = (app, rateLimiter) => {
+  app.post('/image', rateLimiter, async (req, res) => {
     if(!req.files) return res.status(400).send('Looks like you forgot a file!')
     
     let file = req.files.files
