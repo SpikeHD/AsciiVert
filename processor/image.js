@@ -10,23 +10,28 @@ const symbols = ['@', '#', '$', '%', ';', ':', '^', '*', ',', '.', '\'', ' ']
  *  Path to image file.
  * @param {Object} resolution 
  *  Desired resolution.
+ * @param {Boolean} color
+ *  Store color data as well.
  */
-exports.imageToText = (infile, resolution) => {
+exports.imageToText = (infile, resolution, color = false) => {
   return new Promise((resolve, reject) => {
     read(infile, (err, img) => {
       if (err) reject(err)
       if (!img) reject ('Invalid image file.')
+      // Array for storing color data
+      let colArr = []
 
+      // Image w/h
       let iHeight = img.bitmap.height
       let iWidth = img.bitmap.width
-
       if(!resolution) {
         resolution = {
           width: iWidth,
           height: iHeight
         }
       }
-  
+
+      // Downscaled dimensions
       let str = ''
       let downscale = {
         x: Number(iWidth) / Number(resolution.width),
@@ -41,6 +46,9 @@ exports.imageToText = (infile, resolution) => {
           // Since we downscale we only get the relevant pixels, evenly calculated/distributed
           let rgba = intToRGBA(img.getPixelColor(x * downscale.x, y * downscale.y))
           row += calculateSymbol(rgba, symbols)
+
+          // Push color data
+          if (color) colArr.push(rgbToHex(rgba.r, rgba.g, rgba.b))
   
           // If we're done, start the next row
           if (x == resolution.width) str += row + '\n'
@@ -82,9 +90,14 @@ exports.textToImage = (outfile, textObj) => {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
   
     // Write text to image using monospaced font for equal spacing
-    ctx.fillStyle = 'black'
-    ctx.font = 'bold 10pt Courier'
-    ctx.fillText(textObj.content, 0, 0)
+    if (!textObj.color) {
+      // The easy way
+      ctx.fillStyle = 'black'
+      ctx.font = 'bold 10pt Courier'
+      ctx.fillText(textObj.content, 0, 0)
+    } else {
+      // The hard way
+    }
   
     resolve(writebuf(outfile, canvas.toDataURL('image/png')))
   })
@@ -122,4 +135,25 @@ function calculateSymbol(color, symbols) {
 
   // Return the symbol with a space appended to the beginning.
   return ` ${symbols[index]}`
+}
+
+/**
+ * Convert number to hex value
+ * 
+ * @param {Number} n 
+ */
+function hexify(n) {
+  let hex = n.toString(16)
+  return hex.length == 1 ? '0' + hex:hex
+}
+
+/**
+ * Convert RGB color to hex color
+ * 
+ * @param {Number} r 
+ * @param {Number} g 
+ * @param {Number} b 
+ */
+function rgbToHex(r, g, b) {
+  return '#' + hexify(r) + hexify(g) + hexify(b)
 }

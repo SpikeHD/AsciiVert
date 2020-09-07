@@ -9,6 +9,7 @@ let avblArgs = {
   'out':'',
   'resolution':'',
   'framerate':'',
+  'color':false,
   'api':false
 }
 
