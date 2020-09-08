@@ -60,6 +60,7 @@ exports.imageToText = (infile, resolution, color = false) => {
           resolve({
             width: resolution.width,
             height: resolution.height,
+            color: colArr,
             content: str
           })
         }
@@ -90,17 +91,52 @@ exports.textToImage = (outfile, textObj) => {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
   
     // Write text to image using monospaced font for equal spacing
-    if (!textObj.color) {
+    ctx.font = 'bold 10pt Courier'
+    ctx.fillStyle = 'black'
+
+    if (!textObj.color.length > 0) {
       // The easy way
-      ctx.fillStyle = 'black'
-      ctx.font = 'bold 10pt Courier'
       ctx.fillText(textObj.content, 0, 0)
     } else {
       // The hard way
+      textWithColor(ctx, textObj)
     }
   
     resolve(writebuf(outfile, canvas.toDataURL('image/png')))
   })
+}
+
+/**
+ * Draw colored text to canvas.
+ * 
+ * @param {Context} ctx 
+ *  Canvas context.
+ * @param {Object} obj
+ *  Text object.
+ */
+function textWithColor(ctx, obj){
+  // Get each line
+  let lines = obj.content.split('\n')
+  let lineHeight = 16
+
+  ctx.font = 'bold 10pt Courier'
+
+  // Iterate through each line
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i]
+
+    // Iterate through each character
+    for (var x = 0; x < line.length; x++) {
+      // Current character
+      let str = line.charAt(x)
+      // Width of character (for drawing)
+      let mW = ctx.measureText(str).width
+      // Get color of symbol
+      let col = obj.color[(x * i)]
+      ctx.fillStyle = col
+      ctx.fillText(str, x * mW, i * lineHeight) 
+    }
+  }
 }
 
 /**

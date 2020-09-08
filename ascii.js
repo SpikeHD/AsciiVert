@@ -49,7 +49,7 @@ async function doImage() {
   }
   // Create textObj
   console.log('Converting image to text...')
-  const textObj = await imageProc.imageToText(avblArgs.in, resObj)
+  const textObj = await imageProc.imageToText(avblArgs.in, resObj, avblArgs.color)
   
   // Process image
   console.log('Processing and writing image...')
